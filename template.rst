@@ -1,352 +1,245 @@
-Map projections
-===============
+Introduccion
+============
 
-Coordinate reference systems (CRS) are important because the geometric shapes in a GeoDataFrame are simply a
-collection of coordinates in an arbitrary space. A CRS tells Python how those coordinates related to places on
-the Earth. A map projection (or a projected coordinate system) is a systematic transformation of the latitudes and
-longitudes into a plain surface where units are quite commonly represented as meters (instead of decimal degrees).
+Cada dia escuchamos mas seguido hablar de como la data crece en cantidad y calidad, al punto que es un signo de nuestra epoca. Los usos que se le pueden dar dependen de las intenciones e intereses de cada uno. Es muy comun que los negocios usen los datos para 'vender mas', o que algunos los usen para buscar estrategias financieras rentables. Hay tantos usos posibles de los datos como personas y organizaciones en el mundo.
 
-As map projections of gis-layers are fairly often defined differently (i.e. they do not match), it is a
-common procedure to redefine the map projections to be identical in both
-layers. It is important that the layers have the same projection as it
-makes it possible to analyze the spatial relationships between layer,
-such as conduct the Point in Polygon spatial query.
+Lo que mas me interesa a mi es el uso de los datos para informar al estado. Es decir, conocer con mayor detalle las dinamicas y situaciones que atraviesan los actores y asi poder diseniar y evaluar politicas, y en general lograr que el estado funcione de forma mas eficiente y racional. 
 
-Luckily, defining and changing projections is easy in Geopandas. In this tutorial we will see how to retrieve the
-coordinate reference system information from the data, and how to change it. We will re-project a data file from
-WGS84 (lat, lon coordinates) into a Lambert Azimuthal Equal Area projection which is the `recommended projection for
-Europe <http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf>`__ by European Commission.
+Me atrapa este tema porque creo que puede ayudar a mejorar la calidad de vida de muchos. El caso argentino para mi es muy emocionante, no solo porque de ahi vengo, sino porque ademas hay mucho espacio para mejorar y avanzar, tanto en la calidad de vida y el desarrollo economico en general, como en las practicas de recoleccion y registro de datos. 
 
-.. note::
+Con estos tutoriales, tengo varios objetivos:
+-Por un lado quisiera aportar a concientizar sobre la importancia de que nuestro pais tenga buenas practicas en cuanto al manejo de datos. Sobretodo en la medida en que nos pueden permitir mejorar muchisimo la calidad de nuestras politicas informando y evaluando realidades.
+-Por otro lado, muchas veces el hecho de que no contemos con informacion de buena calidad va de la mano de la formacion de los recursos humanos. La estadistica existe desde hace rato, pero las posibles explotaciones de los datos y las tecnologias de innovacion actual todavia no se ensenian en ningun lado. Tenemos que agarrarlas al vuelo y aprovecharlas muchas veces depende de nuestra inventiva. En este proceso es muy importante compartir ideas y cosas que probamos para construir conocimiento y experiencia colectivamente. Ojala le sea util a los que quieran empezar a estudiar y trabajar con la data argentina explotando algunas de las nuevas tecnicas disponibles.
 
-   Choosing an appropriate projection for your map is not always straightforward because it depends on what you actually want
-   to represent with your map, and what is the spatial scale of your data. In fact, there does not exist a "perfect projection"
-   since each one of them has some strengths and weaknesses, and you should choose such projection that fits best for your needs.
-   You can read more about `how to choose a map projection from here <http://www.georeference.org/doc/guide_to_selecting_map_projections.htm>`__,
-   and a nice `blog post about the strengths and weaknesses of few commonly used projections <http://usersguidetotheuniverse.com/index.php/2011/03/03/whats-the-best-map-projection/>`__.
+Espero hacer el esfuerzo de acompaniar de forma didactica, pero este siempre fue mi punto debil, asi es que espero sus comentarios para poder adaptar y aclarar la exposicion de los puntos complicados.
 
-Download data
--------------
+Instalar Python + packages
+==========================
 
-For this tutorial we will be using a Shapefile representing Europe. Download and extract `Europe_borders.zip <../../_static/data/L2/Europe_borders.zip>`__ file
-that contains a Shapefile with following files:
+**Las herramientas que vamos a usar**
+
+Los codigos que incluyo aca son en lenguage Python. Nunca es tarde para empezar a usar Python, sirve para hacer que la computadora haga cosas increibles! Se puede instalar directo de `su pagina <https://www.python.org/>`_, pero **recomiendo** usar `Anaconda <https://www.continuum.io/anaconda-overview>`_ que es una distribucion open-source de los lenguajes Python y R para procesamiento de data, predictive analytics, y computacion cientifica, que intenta simplificar el manejo de los packages o modulos. Es decir, nos simplifica la vida.
+
+El codigo en Python esta pensado para ser escrito en un archivo y correrlo todo de una vez. Muchas veces es mas deseable correr solamente los ultimos renglones, sobretodo si estamos con un codigo que demora en correr y donde toda la primera parte no tiene ningun problema. Ademas en el caso que hayamos calculado algunas variables, quisieramos que sean recordadas por el momento y poder volver a usarlas facilmente. Por este tipo de cuestiones practicas, y otras mas, se desarrollaron las Jupyter notebooks, que nos permiten correr los codigos Python con esta modalidad mas practica. Para instalar `ver aca. <https://jupyter.readthedocs.io/en/latest/install.html#new-to-python-and-jupyter>`
+
+Install Python + packages en Windows
+------------------------------------
+
+Estos pasos se testearon en Windows 7 and 10 con Anaconda3 64 bit, usando conda v4.3.29. (Octubre 2017)
+
+`Download Anaconda installer (64 bit) <https://www.continuum.io/downloads>`_ para Windows.
+
+Instalar Anaconda a tu computadora clickeando el instalador, e instalarlo en el directorio que quieras (necesita administrador).
+Para **todos los usuarios** y con configuraciones por default.
+
+Fijate que ``conda`` funcione `abriendo una consola como administrador <http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/>`_ y corriendo ``conda --version``.
+
+A medida que sea necesario, instala estos packages con conda (y pip) corriendo en una consola estos comandos (el orden importa):
+
+.. code::
+
+    # Install numpy (v 1.13.1)
+    conda install numpy
+
+    # Install pandas (v 0.20.3) --> bundled with python-dateutil (v 2.6.1) and pytz (v 2017.2)
+    conda install pandas
+
+    # Install scipy (v 0.19.1)
+    conda install scipy
+
+    # Install matplotlib (v 2.0.2) --> bundled with cycler, freetype, icu, jpeg, libpng, pyqt, qt, sip, sqlite, tornado, zlib
+    conda install matplotlib
+
+    # Install Geopandas (v 0.3.0) --> bundled with click, click-plugins, cligj, curl, descartes, expat, fiona, freexl, gdal, geos, hdf4, hdf5, kealib, krb5, libiconv, libnetcdf, libpq, libspatialindex, libspatialite, libtiff, libxml2, munch, openjpeg, pcre, proj4, psycopg2, pyproj, pysal, rtree, shapely, sqlalchemy, xerces-c
+    conda install -c conda-forge geopandas
+
+
+Chequea que funciono
+~~~~~~~~~~~~~~~~~~~~
+
+Se puede testear que las instalaciones funcionaron corriendo en la consola IPython (es decir en un Jupyter notebook).
+
+.. code:: python
+
+     import numpy as np
+     import pandas as pd
+     import geopandas as gpd
+     import scipy
+     import shapely
+     import matplotlib.pyplot as plt
+     import pysal
+
+Si no recibis errores, deberia estar funcionando!
+
+Install Python + packages en Linux / Mac
+----------------------------------------
+
+Esto funciona en Ubuntu 16.04 y posiblemente tambien en Mac.
+
+**Instalar Anaconda 3 y agregarlo al system path**
+
+.. code::
+
+    # Download and install Anaconda
+    sudo wget https://repo.continuum.io/archive/Anaconda3-4.1.1-Linux-x86_64.sh
+    sudo bash Anaconda3-4.1.1-Linux-x86_64.sh
+
+    # Add Anaconda installation permanently to PATH variable
+    nano ~/.bashrc
+
+    # Add following line at the end of the file and save (EDIT ACCORDING YOUR INSTALLATION PATH)
+    export PATH=$PATH:/PATH_TO_ANACONDA/anaconda3/bin:/PATH_TO_ANACONDA/anaconda3/lib/python3.5/site-packages
+
+**Instalar packages de Python**
+
+Instalar packages con conda (y pip) corriendo en una terminal los siguientes comandos (el orden importa):
+
+.. code::
+
+    # Install numpy (v 1.13.1)
+    conda install numpy
+
+    # Install pandas (v 0.20.3) --> bundled with python-dateutil (v 2.6.1) and pytz (v 2017.2)
+    conda install pandas
+
+    # Install scipy (v 0.19.1)
+    conda install scipy
+
+    # Install matplotlib (v 2.0.2) --> bundled with cycler, freetype, icu, jpeg, libpng, pyqt, qt, sip, sqlite, tornado, zlib
+    conda install matplotlib
+
+    # Install Geopandas (v 0.3.0) --> bundled with click, click-plugins, cligj, curl, descartes, expat, fiona, freexl, gdal, geos, hdf4, hdf5, kealib, krb5, libiconv, libnetcdf, libpq, libspatialindex, libspatialite, libtiff, libxml2, munch, openjpeg, pcre, proj4, psycopg2, pyproj, pysal, rtree, shapely, sqlalchemy, xerces-c
+    conda install -c conda-forge geopandas
+
+Si no funcionara alguna instalacion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si llegara a faltar algun otro package, ya te imaginas como instalarlo, igualmente lo mas recomendable **buscar en Google** como hacer cualquier cosa que necesites.
+
+Pandas para trabajar con tablas
+===============================
+
+Para todo lo que tiene que ver con datos que podrian ir en tablas (al estilo MS Excel) el modulo 'pandas' es una herramienta muy util. Nos permite combinar tablas, hacer operaciones en las filas y columnas, agrupar segun los valores en algunas columnas y hacer operaciones. En fin, nos permite hacer y deshacer lo que se nos ocurra. 
+
+Vamos a bajar y extraer la data `datos.zip <../datos/datos.zip>`. 
+El archivo `PERSONA-P03.csv` contiene informacion recopilada del Censo Nac. de Hogares y viviendas 2010. En este caso, poder tener la informacion en un formato tan conveniente se lo debemos a Manuel Aristaran, que `colgo <http://dump.jazzido.com/CNPHV2010-RADIO/>` los resultados de queries a la base de datos REDATAM en donde estan registrados los resultados del ultimo censo en Argentina.
+
+En particular el archivo que tenemos aca tiene una columna con los codigos que identifican los radios censales, con el nombre 'link'. El resto de las columnas corresponden a cada edad posible en anios, de forma que cada fila puede tomarse como informacion de la piramide poblacional de un radio censal. Con este dataset podemos saber esencialmente cuanta gente de cada edad habia en cada lugar en octubre de 2010.
+
+Vamos a cargarlo en un notebook de IPython:
+
+.. ipython:: python
+
+    import pandas as pd
+
+    persona = pd.read_csv('datos/PERSONA-P03.csv')
+
+    #Ahora ya tenemos guardado el dataset como un DataFrame de pandas.
+    #Un dataframe tiene muchos metodos que nos sirven para interactuar con el. Por ejemplo, para ver una muestra de la data:
+    persona.sample(5)
+
+
+Geopandas
+---------
+
+Los ejemplos que voy a mostrar explotan no solo la data estadistica sino tambien la geografica. Notar que la clave del dataset persona que acabamos de cargar es que tenga un codigo identificatorio del area censal. Esto es esencial porque nos permite la combinacion con otros dataset que compartan esta columna, o bien que tengan una columna, por ejemplo 'provincia' o 'departamento' que se pueda combinar con la de los radios censales.
+
+Hay un detalle que tambien hay que tener en cuenta. Cuando estamos en la capa geografica, mucha informacion puede naturalmente corresponder a puntos, lineas o poligonos (areas) en el espacio. Estamos habalndo por ejemplo de la ubicacion de edificios, el recorrido de lineas de transporte u otra infraestructura, o los limites de una provincia o distrito. La calidad de la informacion y de los analisis que podamos hacer va a ser infinitamente mayor si contamos con esta informacion de manera exacta.
+
+Para este tipo de informacion, hay formatos especiales de archivos. Las alternativas son muchas, pero una bastante standard es usar archivos ShapeFile (.shp). El archivo .shp viene siempre acompaniado de otros archivos con informacion necesaria como aclaraciones de los sistemas de coordenadas, entre otras cosas.
+
+En una terminal (ubicarse en el directorio donde)
 
 .. code:: bash
 
-   $ cd $HOME
-   $ unzip Europe_borders.zip
-   $ cd Europe_borders
+   $ unzip datos.zip
+   $ cd datos/link_areas/.shp
    $ ls
-   Europe_borders.cpg  Europe_borders.prj  Europe_borders.sbx  Europe_borders.shx
-   Europe_borders.dbf  Europe_borders.sbn  Europe_borders.shp
+   metadatos shape pxlocdatos.pdf  nota aclaratoria.pdf  pxlocdatos.cpg  
+   pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  Thumbs.db
+
+Ahora vamos a usar el modulo geopandas, que esencialmente es lo mismo que pandas, con la posibilidad de incluir formas geometricas (puntos, lineas, poligonos) y hacer operaciones con ellos.
 
 Coordinate reference system (CRS)
 ---------------------------------
 
-GeoDataFrame that is read from a Shapefile contains *always* (well not
-always but should) information about the coordinate system in which the
-data is projected.
+Un GeoDataFrame que se lee de un ShapeFile contiene por lo general informacion sobre el sistema de coordenadas en el cual esta proyectada la data.
 
-Let's start by reading the data from the ``Europe_borders.shp`` file.
+Empecemos leyendo la data del archivo ``pxlocdatos.shp``.
 
 .. ipython:: python
 
     import geopandas as gpd
+    
+    # Leer data
+    pxlocdatos = gpd.read_file("datos/link_areas/pxlocdatos.shp")
+    
+    # Muestra de la data
+    pxlocdatos.sample(3)
 
-    # Filepath to the Europe borders Shapefile
-    fp = "/home/geo/Europe_borders.shp"
+Al igual que en un DataFrame corriente de pandas, podemos por ejemplo preguntar cuales son las columnas de esta tabla:
 
-    @suppress
-    import os
 
-    @suppress
-    fp = os.path.join(os.path.abspath('data'), "Europe_borders.shp")
+.. ipython:: python
 
-    # Read data
-    data = gpd.read_file(fp)
+    pxlocdatos.columns
 
 We can see the current coordinate reference system from ``.crs``
 attribute:
 
 .. ipython:: python
 
-    data.crs
+    pxlocdatos.crs
 
-Okey, so from this disctionary we can see that the data is something called
-**epsg:4326**. The EPSG number (*"European Petroleum Survey Group"*) is
-a code that tells about the coordinate system of the dataset. "`EPSG
-Geodetic Parameter Dataset <http://www.epsg.org/>`__ is a collection of
-definitions of coordinate reference systems and coordinate
-transformations which may be global, regional, national or local in
-application". EPSG-number 4326 that we have here belongs to the WGS84
-coordinate system (i.e. coordinates are in decimal degrees (lat, lon)).
-
-You can find a lot of information about different available coordinate reference systems from:
+Informacion sobre los sistemas de coordenadas se puede encontrar en:
 
   - `www.spatialreference.org <http://spatialreference.org/>`__
   - `www.proj4.org <http://proj4.org/projections/index.html>`__
   - `www.mapref.org <http://mapref.org/CollectionofCRSinEurope.html>`__
 
-Let's also check the values in our ``geometry`` column.
+Para obtener datos de las formas geometricas de las localidades vamos a cargar los archivos shape pertenecientes a la Provincia de Buenos Aires y la Ciudad de Buenos Aires (CABA).
 
 .. ipython:: python
 
-    data['geometry'].head()
-
-Okey, so the coordinate values of the Polygons indeed look like lat-lon values.
-
-Let's convert those geometries into Lambert Azimuthal Equal Area projection (`EPSG: 3035 <http://spatialreference.org/ref/epsg/etrs89-etrs-laea/>`__).
-Changing the projection is really easy to `do in Geopandas <http://geopandas.org/projections.html#re-projecting>`__
-with ``.to_crs()`` -function. As an input for the function, you
-should define the column containing the geometries, i.e. ``geometry``
-in this case, and a ``epgs`` value of the projection that you want to use.
-
-.. ipython:: python
-
-    # Let's take a copy of our layer
-    data_proj = data.copy()
+    Buenos_Aires_datos = gpd.read_file("datos/Buenos Aires/Buenos_Aires_con_datos.shp")
     
-    # Reproject the geometries by replacing the values with projected ones
-    data_proj = data_proj.to_crs(epsg=3035)
+    Buenos_Aires_datos.sample(5)
 
-Let's see how the coordinates look now.
+Fijense que hay una columna que se llama ``geometry``. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla 'pxlocdatos' los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:
 
 .. ipython:: python
 
-    data_proj['geometry'].head()
+    Buenos_Aires_datos['geometry'][10]
 
-And here we go, the numbers have changed! Now we have successfully
-changed the projection of our layer into a new one, i.e. to ETRS-LAEA projection.
+Que nos grafica el area de la fila 10 con un dibujito.
 
-.. note::
+Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar 'dpto_link' que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.
 
-   There is also possibility to pass the projection information as proj4 strings or dictionaries, see more `here <http://geopandas.org/projections.html#coordinate-reference-systems>`__
 
-To really understand what is going on, it is good to explore our data visually. Hence, let's compare the datasets by making
-maps out of them.
+.. ipython:: python
+
+    Buenos_Aires_datos['geometry'][10]
+    
+Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloreamos segun la provincia, para ilustrar una de las posibilidades.
 
 .. code:: python
-
+    
+    #import the standard plotting module
     import matplotlib.pyplot as plt
+    %matplotlib inline
 
-    # Plot the WGS84
-    data.plot(facecolor='gray');
+    # create subplots
+    f, ax = plt.subplots(1, figsize=(3, 5))
 
+    pxlocdatos.plot(axes = ax, column = 'codpcia', edgecolor = 'None', marker = '.')
+       
     # Add title
-    plt.title("WGS84 projection");
+    plt.title('Localidades y provincias');
 
     # Remove empty white space around the plot
     plt.tight_layout()
     
-    # Plot the one with ETRS-LAEA projection
-    data_proj.plot(facecolor='blue');
-
-    # Add title
-    plt.title("ETRS Lambert Azimuthal Equal Area projection");
-
-    # Remove empty white space around the plot
-    plt.tight_layout()
-
-.. ipython:: python
-   :suppress:
-
-       import matplotlib.pyplot as plt;
-       data.plot(facecolor='gray');
-       plt.title("WGS84 projection");
-       @savefig wgs84.png width=3.5in
-       plt.tight_layout();
-
-       data_proj.plot(facecolor="blue");
-       plt.title("ETRS Lambert Azimuthal Equal Area projection");
-       @savefig projected.png width=3.5in
-       plt.tight_layout();
-
-Indeed, they look quite different and our re-projected one looks much better
-in Europe as the areas especially in the north are more realistic and not so stretched as in WGS84.
-
-Next, we still need to change the crs of our GeoDataFrame into EPSG
-3035 as now we only modified the values of the ``geometry`` column.
-We can take use of fiona's ``from_epsg`` -function.
-
-.. ipython:: python
-
-    from fiona.crs import from_epsg
+    plt.show()
     
-    # Determine the CRS of the GeoDataFrame
-    data_proj.crs = from_epsg(3035)
-    
-    # Let's see what we have
-    data_proj.crs
+Los ejemplos mostrados aqui estan en el notebook Parte_I.ipynb 
 
-Finally, let's save our projected layer into a Shapefile so that we can use it later.
-
-.. code:: python
-
-    # Ouput file path
-    outfp = r"/home/geo/Europe_borders_epsg3035.shp"
-    
-    # Save to disk
-    data_proj.to_file(outfp)
-
-.. note::
-
-   On Windows, the prj -file might NOT update with the new CRS value when using the ``from_epsg()`` -function. If this happens
-   it is possible to fix the prj by passing the coordinate reference information as proj4 text, like following.
-
-   .. ipython:: python
-
-      data_proj.crs = '+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs'
-
-   You can find ``proj4`` text versions for different projection from `spatialreference.org <http://spatialreference.org>`__.
-   Each page showing spatial reference information has links for different formats for the CRS. Click a link that says ``Proj4`` and
-   you will get the correct proj4 text presentation for your projection.
-
-Calculating distances
----------------------
-
-Let's, continue working with our ``Europe_borders.shp`` file and find out the Euclidean distances from
-the centroids of the European countries to Helsinki, Finland. We will calculate the distance between Helsinki and
-other European countries (centroids) using a metric projection (World Equidistant Cylindrical) that gives us the distance
-in meters.
-
-- Let's first import necessary packages.
-
-.. ipython:: python
-
-    from shapely.geometry import Point
-    from fiona.crs import from_epsg
-
-Next we need to specify our projection to metric system using `World Equidistant Cylindrical -projection <http://spatialreference.org/ref/esri/world-azimuthal-equidistant/>`__ where distances are represented correctly from the center longitude and latitude.
-
-- Let's specify our target location to be the coordinates of Helsinki (lon=24.9417 and lat=60.1666).
-
-.. ipython:: python
-
-   hki_lon = 24.9417
-   hki_lat = 60.1666
-
-Next we need to specify a Proj4 string to reproject our data into World Equidistant Cylindrical
-in which we want to center our projection to Helsinki. We need to specify the ``+lat_0`` and ``+lon_0`` parameters in Proj4 string to do this.
-
-.. ipython:: python
-
-   proj4_txt = '+proj=eqc +lat_ts=60 +lat_0=60.1666 +lon_0=24.9417 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs'
-
-Okey, now we are ready to transform our ``Europe_borders.shp`` data into the desired projection. Let's create a new
-copy of our GeoDataFrame called ``data_d`` (d for 'distance').
-
-.. ipython:: python
-
-   data_d = data.to_crs(proj4_txt)
-
-Let's take a look of our data and create a map, so we can see what we have now.
-
-.. ipython:: python
-
-   data_d.plot(facecolor='white');
-   @savefig europe_euqdist.png width=4.5in
-   plt.tight_layout();
-
-Okey, from here we can see that indeed our map is now centered to Helsinki as the 0-position in both x and y is on top of Helsinki.
-
-- Let's continue our analysis by creating a Point object from Helsinki and insert it into a GeoPandas GeoSeries. We also specify that the CRS of the GeoSeries is WGS84. You can do this by using ``crs`` parameter when creating the GeoSeries.
-
-.. ipython:: python
-
-   hki = gpd.GeoSeries([Point(hki_lon, hki_lat)], crs=from_epsg(4326))
-
-- Let's convert this point to the same projection as our Europe data is.
-
-.. ipython:: python
-
-   hki = hki.to_crs(proj4_txt)
-   print(hki)
-
-Aha! So the Point coordinates of Helsinki are 0. This confirms us that the center point of our projection is indeed Helsinki.
-
-Next we need to calculate the centroids for all the Polygons of the European countries. This can be done easily in Geopandas by using the ``centroid`` attribute.
-
-.. ipython:: python
-
-   data_d['country_centroid'] = data_d.centroid
-   data_d.head(2)
-
-Okey, so now we have a new column ``country_centroid`` that has the Point geometries representing the centroids of each Polygon.
-
-Now we can calculate the distances between the centroids and Helsinki.
-At the end of `Lesson 6 of Geo-Python course <https://geo-python.github.io/2017/lessons/L6/pandas-analysis.html#repeating-the-data-analysis-with-larger-dataset>`__
-we saw an example where we used ``apply()`` function for doing the loop instead of using the ``iterrows()`` function.
-
-In (Geo)Pandas, the ``apply()`` function takes advantage of numpy when looping, and is hence much faster
-which can give a lot of speed benefit when you have many rows to iterate over. Here, we will see how we can use that
-to calculate the distance between the centroids and Helsinki. We will create our own function to do this calculation.
-
- - Let's first create our function called ``calculateDistance()``.
-
-.. code:: python
-
-   def calculateDistance(row, dest_geom, src_col='geometry', target_col='distance'):
-       """
-       Calculates the distance between a single Shapely Point geometry and a GeoDataFrame with Point geometries.
-
-       Parameters
-       ----------
-       dest_geom : shapely.Point
-           A single Shapely Point geometry to which the distances will be calculated to.
-       src_col : str
-           A name of the column that has the Shapely Point objects from where the distances will be calculated from.
-       target_col : str
-           A name of the target column where the result will be stored.
-       """
-       # Calculate the distances
-       dist = row[src_col].distance(dest_geom)
-       # Tranform into kilometers
-       dist_km = dist/1000
-       # Assign the distance to the original data
-       row[target_col] = dist_km
-       return row
-
-.. ipython:: python
-   :suppress:
-
-      def calculateDistance(row, dest_geom, src_col='geometry', target_col='distance'):
-          dist = row[src_col].distance(dest_geom)
-          dist_km = dist/1000
-          row[target_col] = dist_km
-          return row
-
-The parameter row is used to pass the data from each row of our GeoDataFrame into our function and then the other paramaters are used for passing other necessary information for using our function.
-
-- Before using our function and calculating the distances between Helsinki and centroids, we need to get the Shapely point geometry from the re-projected Helsinki center point. We can use the ``get()`` function to retrieve a value from specific index (here index 0).
-
-.. ipython:: python
-
-   hki_geom = hki.get(0)
-   print(hki_geom)
-
-Now we are ready to use our function with ``apply()`` function. When using the function, it is important to specify that the ``axis=1``.
-This specifies that the calculations should be done row by row (instead of column-wise).
-
-.. ipython:: python
-
-   data_d = data_d.apply(calculateDistance, dest_geom=hki_geom, src_col='country_centroid', target_col='dist_to_Hki', axis=1)
-   data_d.head(20)
-
-Great! Now we have successfully calculated the distances between the Polygon centroids and Helsinki. :)
-
-Let's check what is the longest and mean distance to Helsinki from the centroids of other European countries.
-
-.. ipython:: python
-
-   max_dist = data_d['dist_to_Hki'].max()
-   mean_dist = data_d['dist_to_Hki'].mean()
-   print("Maximum distance to Helsinki is %.0f km, and the mean distance is %.0f km." % (max_dist, mean_dist))
-
-Okey, it seems that we finns in the North are fairly far away from all other European countries as the mean distance to other countries is 1185 kilometers.
-
-.. note::
-
-   If you would like to calculate distances between multiple locations across the globe, it is recommended to use
-   `Haversine formula <https://en.wikipedia.org/wiki/Haversine_formula>`__ to do the calculations.
-   `Haversine <https://github.com/mapado/haversine>`__ package in Python provides an easy-to-use function for calculating these
-   based on latitude and longitude values.
