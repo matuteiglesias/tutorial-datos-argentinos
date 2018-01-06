@@ -25,7 +25,8 @@ En este caso vamos a combinar las tablas de radios censales (junto con algunos d
     Buenos_Aires_datos['dpto_link'] = Buenos_Aires_datos['link'].str[:5]
     Buenos_Aires_datos = Buenos_Aires_datos[[u'prov', u'depto', u'link', u'varon', u'mujer', u'totalpobl',
            u'hogares', u'viviendasp', u'viv_part_h', u'geometry']]
-
+           
+           
 Bueno, ya tenemos dos tablas con los radios censales de la Ciudad y de Buenos Aires. Que podemos hacer con data en este formato?
 Veamos algunos ejemplos:
 
