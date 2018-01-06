@@ -147,5 +147,3 @@ Como siempre, es posible que la direccion que busquemos no se encuentre. En esta
 
 Si no hace la diferencia, podemos 'tirar' las direcciones que no hayan dado resultado y seguir con el analisis. Si queremos encontrar la informacion del dato de alguna forma, lo primero que hay que chequear es que no haya errores de tipeo. Luego, muchas veces si tenemos direcciones que son largas, puede ser que algunas de las palabras confundan al buscador. Puede ser mejor evitar informacion extra del tipo 'Departamento de Quimica Organica' o 'Barrio el Jaguel'. En el primer caso porque los datos son de edificios enteros, y en general incluir nombres de divisiones institucionales confunde mas de lo que aporta. En el segundo caso, puede tratarse de nombres populares de zonas, pero por ejemplo en el caso de Buenos Aires, la direccion ya es unica a nivel partido, es decir que barrios o localidades en realidad no hacen la diferencia.
 
-
- 
