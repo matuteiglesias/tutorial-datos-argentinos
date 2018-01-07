@@ -25,6 +25,8 @@ Parece complicado, pero esta operacion se puede hacer sin muchas vueltas aprovec
     #importamos los datasets
     voronoi = gpd.read_file('datos/voronoi_escuelas_secundarias_AMBA.shp')
     AMBA_datos_persona_13_18 = gpd.read_file('datos/AMBA_datos_persona_13_18.shp')
+    
+y ahora...
 
 .. ipython:: python
     # Paso clave, calcula las intersecciones de poligonos en ambos datasets, todos contra todos.
