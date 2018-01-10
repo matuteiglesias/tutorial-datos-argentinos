@@ -12,10 +12,197 @@ Para los que deseen, pueden ir directamente a la pagina en donde se dan las inst
 
 https://maps.googleapis.com/maps/api/geocode/json?address=Instituto+Santa+Maria+de+los+Angeles,+Coghlan
 
-y vas ver que viene dada una respuesta con informacion en formato json. Mas adelante vamos a ver como consultar todas las direcciones que podemos tener en una de las columnas de nuestra table de datos. Ahi es cuando se empieza a poner bueno.
+y vas ver que viene dada una respuesta con informacion en formato json. La API key nos va a permitir consultar mucho mas rapido.
 
-Antes de continuar, queria comentar algunos de los inconvenientes que hay con este metodo. 
+Claro que en este paso nos podemos encontrar algunos inconvenientes. Es posible que la direccion que busquemos no se encuentre. En esta situacion hay varias opciones que considerar. Basicamente hay que averiguar porque exactamente no se encontro la direccion, y tambien evaluar que tan importante es en el marco de lo que estamos haciendo, si podemos dejar perder un dato o lo queremos recuperar.
 
-Como siempre, es posible que la direccion que busquemos no se encuentre. En esta situacion hay varias opciones que considerar. Basicamente hay que averiguar porque exactamente no se encontro la direccion, y tambien evaluar que tan importante es en el marco de lo que estamos haciendo. 
+Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un error como valor del atributo 'status'. En caso de recibir el error ZERO_RESULTS lo primero a chequear son errores de tipeo. Luego, tratar de parafrasear la direccion, a pesar de que la API es flexible al interpretar las direcciones que ponemos. Si tenemos direcciones que son largas, puede ser que algunas de las palabras confundan al buscador. Puede ser mejor evitar informacion extra del tipo 'Departamento de Quimica Organica' o 'Barrio el Jaguel'. En el primer caso porque los datos son de edificios enteros, y en general incluir nombres de divisiones institucionales confunde mas de lo que aporta. En el segundo caso, hay nombres populares de zonas o barrios, aunque la direccion ya es unica a nivel partido, es decir que barrios o localidades en realidad no son necesarios al buscar y al contrario, pueden confundir.
 
-Si no hace la diferencia, podemos 'tirar' las direcciones que no hayan dado resultado y seguir con el analisis. Si queremos encontrar la informacion del dato de alguna forma, lo primero que hay que chequear es que no haya errores de tipeo. Luego, muchas veces si tenemos direcciones que son largas, puede ser que algunas de las palabras confundan al buscador. Puede ser mejor evitar informacion extra del tipo 'Departamento de Quimica Organica' o 'Barrio el Jaguel'. En el primer caso porque los datos son de edificios enteros, y en general incluir nombres de divisiones institucionales confunde mas de lo que aporta. En el segundo caso, puede tratarse de nombres populares de zonas, pero por ejemplo en el caso de Buenos Aires, la direccion ya es unica a nivel partido, es decir que barrios o localidades en realidad no hacen la diferencia.
+
+.. ipython:: python
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
+    # Vamos a cargar un padron de escuelas de Argentina
+
+    # Estos son los nombres de columna
+    cols = ['Jurisdicción','CUE Anexo','Nombre','Sector','Estado','Ámbito','Domicilio','CP','Teléfono','Código Localidad','Localidad','Departamento','E-mail','Ed. Común','Ed. Especial','Ed. de Jóvenes y Adultos','Ed. Artística','Ed. Hospitalaria Domiciliaria','Ed. Intercultural Bilingüe','Ed. Contexto de Encierro','Jardín maternal','Jardín de infantes','Primaria','Secundaria','Secundaria Técnica (INET)','Superior no Universitario','Superior No Universitario (INET)']
+
+    # Leer csv, remplazar las 'X' con True y los '' (NaN) con False
+    escuelas = pd.read_csv('../../datos/escuelas_arg.csv', names=cols).fillna(False).replace('X', True)
+
+    # Construir la columna 'dpto_link' con los codigos indetificatorios de partidos como los que teniamos
+    escuelas['dpto_link'] = escuelas['C\xc3\xb3digo Localidad'].astype(str).str.zfill(8).str[:5]
+
+    # Tenemos los radios censales del AMBA, que creamos en el notebook anterior. Creemos los 'dpto_link' del AMBA.
+    radios_censales_AMBA = pd.read_csv('../../datos/AMBA_datos', dtype=object)
+    dpto_links_AMBA = (radios_censales_AMBA['prov'] + radios_censales_AMBA['depto']).unique()
+
+    # Filtramos las escuelas AMBA
+    escuelas_AMBA = escuelas.loc[escuelas['dpto_link'].isin(dpto_links_AMBA)]
+    escuelas_AMBA = pd.concat([escuelas_AMBA, escuelas.loc[escuelas['Jurisdicci\xc3\xb3n'] == 'Ciudad de Buenos Aires']])
+
+    # Filtramos secundaria estatal
+    escuelas_AMBA_secundaria_estatal = escuelas_AMBA.loc[escuelas_AMBA['Secundaria'] & (escuelas_AMBA[u'Sector'] == 'Estatal')]
+    escuelas_AMBA_secundaria_estatal.reset_index(inplace=True, drop=True)
+
+    # Creamos un campo que llamamos 'Address', uniendo domicilio, localidad, departamento, jurisdiccion, y ', Argentina'
+    escuelas_AMBA_secundaria_estatal['Address'] = \
+    escuelas_AMBA_secundaria_estatal['Domicilio'].astype(str) + ', ' + \
+    escuelas_AMBA_secundaria_estatal['Localidad'].astype(str) + ', ' + \
+    escuelas_AMBA_secundaria_estatal['Departamento'].astype(str) + ', ' + \
+    escuelas_AMBA_secundaria_estatal['Jurisdicci\xc3\xb3n'].astype(str) +', Argentina'
+
+
+Barbaro, con esto ya podemos empezar a preguntar a Google Maps. Sin embargo, antes de pasar a la geolocalizacion, incluyo unas funciones para aplicar en la columna 'Adress' y que nos permiten retocar un poco la expresion. Las disenie mirando las busquedas sin exito y viendo si habia algun patron con el cual reformatearlas. Por ejemplo, una de las expresiones mas comunes en Buenos Aires, pero que Google Maps no interpreta es 'E/' para indicar que el lugar esta 'entre' tal calle y tal otra. Removiendo la informacion de 'entre que calles esta' permite que la API no se confunda, y de hecho casi siempre se indica el nombre de calle y la altura, con lo cual la informacion de 'entre cuales calles' es redundante.
+
+La otra cuestion recurrente eran nombres de barrios y localidades. La mayoria de ellos no figura en Google Maps, y de hecho del nombre de calle y numero se puede pasar al nombre de partido sin lugar a confusiones. 
+
+Para hacer estas modificaciones es que escribi las funciones filtrar_entre_calles() y filtrar_barrio(). Las uso para crear una nueva columna de direcciones ('Address_2') formateada. La idea es que si falla la primera, esta la segunda. Si falla esta, esta la tercera. Y luego de eso, en este caso ya el 90% de las direcciones logran ser identificadas. En este punto, ya es concebible localizar las direcciones de forma mas manual, o bien, desecharlas ya que no son demasiadas. Estas funciones nos pasan de:
+
+H. YRIGOYEN E/ L.N. ALEM Y BANCALARI 50  , MATHEU, ESCOBAR, Buenos Aires, Argentina
+
+a
+
+'H. YRIGOYEN 50  , MATHEU, ESCOBAR, Buenos Aires, Argentina'
+
+y
+
+'H. YRIGOYEN 50  , ESCOBAR, Buenos Aires, Argentina'
+
+aumentando en cada paso las chances te geolocalizar exitosamente. A continuacion los codigos de este paso:
+
+
+.. ipython:: python
+	import re
+
+	def filtrar_entre_calles(string):
+	    """
+	    Removes substring between 'E/' and next field (delimited by ','). Case insensitive.
+	    
+	    example: 
+	    >>> out = filtrar_entre_calles('LASCANO E/ ROMA E ISLAS MALVINAS 6213, ISIDRO CASANOVA')
+	    >>> print out
+	    
+	    'LASCANO 6213, ISIDRO CASANOVA'
+	    
+	    """
+	    s = string.lower()
+	    try:
+		m = re.search("\d", s)
+		start = s.index( 'e/' )
+	#         end = s.index( last, start )
+		end = m.start()
+		return string[:start] + string[end:]
+	    except:
+		return string
+	    
+	def filtrar_barrio(string, n = 3):
+	    """
+	    Leaves only n most aggregate fields and the address. It also removes 'S/N' with a trick.
+	    
+	    example: 
+	    >>> out = filtrar_entre_calles('LASCANO 6213, ISIDRO CASANOVA, LA MATANZA, Buenos Aires, Argentina')
+	    >>> print out
+	    
+	    'LASCANO 6213, LA MATANZA, Buenos Aires, Argentina'
+	    
+	    """
+	    try:
+		coma_partido_jurisdiccion =  [m.start() for m in re.finditer(',', string)][-n]
+		coma_direccion =  [m.start() for m in re.finditer(',', string)][0]
+
+		s = string[:coma_direccion][::-1]
+		
+		if "n/s" in s.lower():
+		    start = s.lower().index('n/s')
+		    cut = len(s) - len('n/s') - start
+
+		else:    
+		    m = re.search("\d", s)
+		    cut = len(s) - m.start(0)
+
+		return string[:cut] + string[coma_partido_jurisdiccion:]
+	    except AttributeError:
+		return string
+
+	escuelas_AMBA_secundaria_estatal['Address_2'] = escuelas_AMBA_secundaria_estatal['Address'].apply(filtrar_entre_calles)
+	escuelas_AMBA_secundaria_estatal['Address_3'] = escuelas_AMBA_secundaria_estatal['Address_2'].apply(filtrar_barrio)
+
+	escuelas_AMBA_secundaria_estatal.to_csv('../../datos/escuelas_AMBA_secundaria_estatal.csv', index = False)
+
+
+Finalmente vamos a la funcion de geolocalizacion. Esta version necesita adaptarse para tratar con la quota diaria de consultas. Pero mientras tu dataset necesite menos de 2500 busquedas, no te tendrias que preocupar. 
+
+.. ipython:: python
+	import json
+	import time
+	import urllib
+	import urllib2
+
+	def geolocate(inp, API_key = None, BACKOFF_TIME = 30):
+
+	    # See https://developers.google.com/maps/documentation/timezone/get-api-key
+	#     with open('googleMapsAPIkey.txt', 'r') as myfile:
+	#         maps_key = myfile.read().replace('\n', '')
+	    
+	    base_url = 'https://maps.googleapis.com/maps/api/geocode/json'
+
+	    # This joins the parts of the URL together into one string.
+	    url = base_url + '?' + urllib.urlencode({
+		'address': "%s" % (inp),
+		'key': API_key,
+	    })
+	    
+	    try:
+		# Get the API response.
+		response = str(urllib2.urlopen(url).read())
+	    except IOError:
+		pass  # Fall through to the retry loop.
+	    else:
+		# If we didn't get an IOError then parse the result.
+		result = json.loads(response.replace('\\n', ''))
+		if result['status'] == 'OK':
+		    return result['results'][0]
+		elif result['status'] != 'UNKNOWN_ERROR':
+		    # Many API errors cannot be fixed by a retry, e.g. INVALID_REQUEST or
+		    # ZERO_RESULTS. There is no point retrying these requests.
+	#             raise Exception(result['error_message'])
+		    return None
+		# If we're over the API limit, backoff for a while and try again later.
+		elif result['status'] == 'OVER_QUERY_LIMIT':
+		    print "Hit Query Limit! Backing off for "+str(BACKOFF_TIME)+" minutes..."
+		    time.sleep(BACKOFF_TIME * 60) # sleep for 30 minutes
+		    geocoded = False
+
+	def set_geolocation_values(df, loc):
+	    df.set_value(i,'lng', loc['geometry']['location']['lng'])
+	    df.set_value(i,'lat', loc['geometry']['location']['lat'])
+	    df.set_value(i, 'id', loc['place_id'])
+
+Ahora...
+
+.. ipython:: python
+	dataframe = escuelas_AMBA_secundaria_estatal
+	col, col_2, col_3 = 'Address', 'Address_2', 'Address_3'
+	API_key = 'AIzaSyDjBFMZlNTyds2Sfihu2D5LTKupKDBpf6c'
+
+	for i, row in dataframe.iterrows():
+	    loc = geolocate(row[col], API_key)
+	    if loc:
+		set_geolocation_values(dataframe, loc)
+	    else:
+		loc = geolocate(row[col_2], API_key)
+		if loc:
+		    set_geolocation_values(dataframe, loc)
+		else:
+		    loc = geolocate(row[col_3], API_key)
+		    if loc:
+		        set_geolocation_values(dataframe, loc)
+		     
+	    if i%50 == 0:
+		print 'processed row '+str(i)
+		
+	dataframe.to_csv('../../datos/esc_sec_AMBA_geoloc_480_1200.csv', index = False, encoding = 'utf8')
+
