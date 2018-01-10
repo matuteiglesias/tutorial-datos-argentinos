@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-88382509-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandas para trabajar con tablas &mdash; Coleccion de Tutoriales con Datos Argentinos  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Coleccion de Tutoriales con Datos Argentinos  documentation" href="../../index.html"/>
+        <link rel="next" title="Geolocalizacion" href="2_Geolocalizacion.html"/>
+        <link rel="prev" title="Introduccion" href="../../info/Introduccion.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Coleccion de Tutoriales con Datos Argentinos
+          
+
+          
+            
+            <img src="../../_static/logo_localidades_arg.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2017
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Information General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/Instalacion.html">Instalar Python + packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../info/Introduccion.html">Introduccion</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial 1: Escuelas del Conurbano</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pandas para trabajar con tablas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#geopandas">Geopandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coordinate-reference-system-crs">Coordinate reference system (CRS)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2_Geolocalizacion.html">Geolocalizacion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Mapas.html">Haciendo mapas con shapely y geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Operaciones_con_poligonos.html">Mas operaciones con poligonos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Coleccion de Tutoriales con Datos Argentinos</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>Pandas para trabajar con tablas</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/matuteiglesias/tutorial-datos-argentinos/blob/master/source/tutoriales/escuelas_del_conurbano/1_Geopandas.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pandas-para-trabajar-con-tablas">
+<h1>Pandas para trabajar con tablas<a class="headerlink" href="#pandas-para-trabajar-con-tablas" title="Permalink to this headline">¶</a></h1>
+<p>Para todo lo que tiene que ver con datos que podrian ir en tablas (al estilo MS Excel) el modulo &#8216;pandas&#8217; es una herramienta muy util. Nos permite combinar tablas, hacer operaciones en las filas y columnas, agrupar segun los valores en algunas columnas y hacer operaciones. En fin, nos permite hacer y deshacer lo que se nos ocurra.</p>
+<p>Vamos a bajar y extraer la data <cite>datos.zip &lt;../datos/datos.zip&gt;</cite>.
+El archivo <cite>PERSONA-P03.csv</cite> contiene informacion recopilada del Censo Nac. de Hogares y viviendas 2010. En este caso, poder tener la informacion en un formato tan conveniente se lo debemos a Manuel Aristaran, que <cite>colgo &lt;http://dump.jazzido.com/CNPHV2010-RADIO/&gt;</cite> los resultados de queries a la base de datos REDATAM en donde estan registrados los resultados del ultimo censo en Argentina.</p>
+<p>En particular el archivo que tenemos aca tiene una columna con los codigos que identifican los radios censales, con el nombre &#8216;link&#8217;. El resto de las columnas corresponden a cada edad posible en anios, de forma que cada fila puede tomarse como informacion de la piramide poblacional de un radio censal. Con este dataset podemos saber esencialmente cuanta gente de cada edad habia en cada lugar en octubre de 2010.</p>
+<p>Vamos a cargarlo en un notebook de IPython:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="gp">In [2]: </span><span class="n">persona</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datos/PERSONA-P03.csv&#39;</span><span class="p">)</span>
+
+<span class="go">#Ahora ya tenemos guardado el dataset como un DataFrame de pandas.</span>
+<span class="go">#Un dataframe tiene muchos metodos que nos sirven para interactuar con el. Por ejemplo, para ver una muestra de la data:</span>
+<span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gh">Out[3]: </span><span class="go"></span>
+<span class="go">           radio  edad_0  edad_1  edad_2  edad_3  edad_4  edad_5  edad_6  \</span>
+<span class="go">34174  300842907       0       0       1       0       0       0       0   </span>
+<span class="go">2585    20121007       9      12      10       8       7      12       8   </span>
+<span class="go">49858  860491215       9       8      19      10      11       7      14   </span>
+<span class="go">42364  620423001      10       8       4       4       8      12       4   </span>
+<span class="go">21508   67070604       5       5       7       4       2       7       8   </span>
+
+<span class="go">       edad_7  edad_8  ...    edad_102  edad_103  edad_104  edad_105  \</span>
+<span class="go">34174       1       0  ...           0         0         0         0   </span>
+<span class="go">2585       11      10  ...           0         0         0         0   </span>
+<span class="go">49858      12      16  ...           0         0         0         0   </span>
+<span class="go">42364       5      12  ...           0         0         0         0   </span>
+<span class="go">21508       2       4  ...           0         0         0         0   </span>
+
+<span class="go">       edad_106  edad_107  edad_108  edad_109  edad_110  TOTAL  </span>
+<span class="go">34174         0         0         0         0         0     16  </span>
+<span class="go">2585          0         0         0         0         0    768  </span>
+<span class="go">49858         0         0         0         0         0    997  </span>
+<span class="go">42364         0         0         0         0         0    715  </span>
+<span class="go">21508         0         0         0         0         0    415  </span>
+
+<span class="go">[5 rows x 113 columns]</span>
+</pre></div>
+</div>
+<div class="section" id="geopandas">
+<h2>Geopandas<a class="headerlink" href="#geopandas" title="Permalink to this headline">¶</a></h2>
+<p>Los ejemplos que voy a mostrar explotan no solo la data estadistica sino tambien la geografica. Notar que la clave del dataset persona que acabamos de cargar es que tenga un codigo identificatorio del area censal. Esto es esencial porque nos permite la combinacion con otros dataset que compartan esta columna, o bien que tengan una columna, por ejemplo &#8216;provincia&#8217; o &#8216;departamento&#8217; que se pueda combinar con la de los radios censales.</p>
+<p>Hay un detalle que tambien hay que tener en cuenta. Cuando estamos en la capa geografica, mucha informacion puede naturalmente corresponder a puntos, lineas o poligonos (areas) en el espacio. Estamos habalndo por ejemplo de la ubicacion de edificios, el recorrido de lineas de transporte u otra infraestructura, o los limites de una provincia o distrito. La calidad de la informacion y de los analisis que podamos hacer va a ser infinitamente mayor si contamos con esta informacion de manera exacta.</p>
+<p>Para este tipo de informacion, hay formatos especiales de archivos. Las alternativas son muchas, pero una bastante standard es usar archivos ShapeFile (.shp). El archivo .shp viene siempre acompaniado de otros archivos con informacion necesaria como aclaraciones de los sistemas de coordenadas, entre otras cosas.</p>
+<p>En una terminal (ubicarse en el directorio donde)</p>
+<div class="code bash highlight-default"><div class="highlight"><pre>$ unzip datos.zip
+$ cd datos/link_areas/.shp
+$ ls
+metadatos shape pxlocdatos.pdf  nota aclaratoria.pdf  pxlocdatos.cpg
+pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  Thumbs.db
+</pre></div>
+</div>
+<p>Ahora vamos a usar el modulo geopandas, que esencialmente es lo mismo que pandas, con la posibilidad de incluir formas geometricas (puntos, lineas, poligonos) y hacer operaciones con ellos.</p>
+</div>
+<div class="section" id="coordinate-reference-system-crs">
+<h2>Coordinate reference system (CRS)<a class="headerlink" href="#coordinate-reference-system-crs" title="Permalink to this headline">¶</a></h2>
+<p>Un GeoDataFrame que se lee de un ShapeFile contiene por lo general informacion sobre el sistema de coordenadas en el cual esta proyectada la data.</p>
+<p>Empecemos leyendo la data del archivo <code class="docutils literal"><span class="pre">pxlocdatos.shp</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="kn">as</span> <span class="nn">gpd</span>
+
+<span class="go"># Leer data</span>
+<span class="gp">In [5]: </span><span class="n">pxlocdatos</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;datos/link_areas/pxlocdatos.shp&quot;</span><span class="p">)</span>
+
+<span class="go"># Muestra de la data</span>
+<span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go"></span>
+<span class="go">          link codpcia coddpto codloc  provincia       departamen  \</span>
+<span class="go">722   10098050      10     098    050  Catamarca       Santa Rosa   </span>
+<span class="go">1816  38063030      38     063    030      Jujuy        San Pedro   </span>
+<span class="go">2273  54070070      54     070    070   Misiones  Leandro N. Alem   </span>
+
+<span class="go">            localidad func_loc tiploc tip2loc              ...               \</span>
+<span class="go">722         Los Altos        0      1       0              ...                </span>
+<span class="go">1816       Don Emilio        0      1       0              ...                </span>
+<span class="go">2273  Leandro N. Alem        3      1       0              ...                </span>
+
+<span class="go">      longitud        xgk        ygk  varones  mujeres  personas  hogares  \</span>
+<span class="go">722   65 30 26  3548465.0  6898396.0   2292.0   2198.0    4490.0   1115.0   </span>
+<span class="go">1816  64 54 21  3611061.0  7311512.0    241.0    205.0     446.0    106.0   </span>
+<span class="go">2273  55 19 34  7369083.0  6947158.0  11235.0  12104.0   23339.0   7141.0   </span>
+
+<span class="go">      viv_part_h  viv_part                      geometry  </span>
+<span class="go">722       1015.0    1188.0  POINT (3549418.25 6898007.5)  </span>
+<span class="go">1816       105.0     122.0     POINT (3610855 7311160.5)  </span>
+<span class="go">2273      6954.0    7644.0     POINT (4557206 6901672.5)  </span>
+
+<span class="go">[3 rows x 21 columns]</span>
+</pre></div>
+</div>
+<p>Al igual que en un DataFrame corriente de pandas, podemos por ejemplo preguntar cuales son las columnas de esta tabla:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">columns</span>
+<span class="gh">Out[7]: </span><span class="go"></span>
+<span class="go">Index([      u&#39;link&#39;,    u&#39;codpcia&#39;,    u&#39;coddpto&#39;,     u&#39;codloc&#39;,</span>
+<span class="go">        u&#39;provincia&#39;, u&#39;departamen&#39;,  u&#39;localidad&#39;,   u&#39;func_loc&#39;,</span>
+<span class="go">           u&#39;tiploc&#39;,    u&#39;tip2loc&#39;,    u&#39;latitud&#39;,   u&#39;longitud&#39;,</span>
+<span class="go">              u&#39;xgk&#39;,        u&#39;ygk&#39;,    u&#39;varones&#39;,    u&#39;mujeres&#39;,</span>
+<span class="go">         u&#39;personas&#39;,    u&#39;hogares&#39;, u&#39;viv_part_h&#39;,   u&#39;viv_part&#39;,</span>
+<span class="go">         u&#39;geometry&#39;],</span>
+<span class="go">      dtype=&#39;object&#39;)</span>
+</pre></div>
+</div>
+<p>We can see the current coordinate reference system from <code class="docutils literal"><span class="pre">.crs</span></code>
+attribute:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">crs</span>
+<span class="gh">Out[8]: </span><span class="go"></span>
+<span class="go">{u&#39;ellps&#39;: u&#39;WGS84&#39;,</span>
+<span class="go"> u&#39;k&#39;: 1,</span>
+<span class="go"> u&#39;lat_0&#39;: -90,</span>
+<span class="go"> u&#39;lon_0&#39;: -66,</span>
+<span class="go"> u&#39;no_defs&#39;: True,</span>
+<span class="go"> u&#39;proj&#39;: u&#39;tmerc&#39;,</span>
+<span class="go"> u&#39;units&#39;: u&#39;m&#39;,</span>
+<span class="go"> u&#39;x_0&#39;: 3500000,</span>
+<span class="go"> u&#39;y_0&#39;: 0}</span>
+</pre></div>
+</div>
+<p>Informacion sobre los sistemas de coordenadas se puede encontrar en:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://spatialreference.org/">www.spatialreference.org</a></li>
+<li><a class="reference external" href="http://proj4.org/projections/index.html">www.proj4.org</a></li>
+<li><a class="reference external" href="http://mapref.org/CollectionofCRSinEurope.html">www.mapref.org</a></li>
+</ul>
+</div></blockquote>
+<p>Para obtener datos de las formas geometricas de las localidades vamos a cargar los archivos shape pertenecientes a la Provincia de Buenos Aires y la Ciudad de Buenos Aires (CABA).</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="n">Buenos_Aires_datos</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;datos/Buenos Aires/Buenos_Aires_con_datos.shp&quot;</span><span class="p">)</span>
+
+<span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gh">Out[10]: </span><span class="go"></span>
+<span class="go">       toponimo_i       link  varon  mujer  totalpobl  hogares  viviendasp  \</span>
+<span class="go">16525      306426  064344305  347.0  407.0      754.0    244.0       258.0   </span>
+<span class="go">15975      302279  063571102  590.0  599.0     1189.0    336.0       355.0   </span>
+<span class="go">649        309706  067911314  411.0  463.0      874.0    287.0       320.0   </span>
+<span class="go">15254      314588  068612102  357.0  428.0      785.0    276.0       308.0   </span>
+<span class="go">5316       313516  068051702  615.0  703.0     1318.0    433.0       378.0   </span>
+
+<span class="go">       viv_part_h                                           geometry  </span>
+<span class="go">16525       221.0  POLYGON ((4198294.232491652 6130696.628971566,...  </span>
+<span class="go">15975       316.0  POLYGON ((4236207.107862051 5765947.840788023,...  </span>
+<span class="go">649         282.0  POLYGON ((4110452.868434441 5848506.19660996, ...  </span>
+<span class="go">15254       266.0  POLYGON ((4189731.746509073 6156989.723297327,...  </span>
+<span class="go">5316        342.0  POLYGON ((4178991.628433641 6159568.098256181,...  </span>
+</pre></div>
+</div>
+<p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b8242fbcad0&gt;</span>
+</pre></div>
+</div>
+<p>Que nos grafica el area de la fila 10 con un dibujito.</p>
+<p>Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar &#8216;dpto_link&#8217; que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
+<span class="gh">Out[12]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b8242fbcad0&gt;</span>
+</pre></div>
+</div>
+<p>Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloreamos segun la provincia, para ilustrar una de las posibilidades.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="c1">#import the standard plotting module</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># create subplots</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">pxlocdatos</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;codpcia&#39;</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Localidades y provincias&#39;</span><span class="p">);</span>
+
+<span class="c1"># Remove empty white space around the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Los ejemplos mostrados aqui estan en el notebook 1_Geopandas.ipynb</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2_Geolocalizacion.html" class="btn btn-neutral float-right" title="Geolocalizacion" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../info/Introduccion.html" class="btn btn-neutral" title="Introduccion" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+      Last updated on Jan 10, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
