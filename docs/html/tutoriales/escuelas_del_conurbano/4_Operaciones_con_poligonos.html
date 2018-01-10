@@ -164,79 +164,29 @@
 <p>es un modelo porque asumimos que se acerca a la realidad lo suficiente, aunque no esperamos tomar sus resultados exactos al pie de la letra. Tengamos en cuenta que los conteos del censo ni siquiera son exactos ya sea por problemas al momento de censar (como gente ausente, datos falsos o gente duplicada) o porque de todos modos el censo intenta medir la cantidad de gente y su ubicacion a la medianoche anterior a la encuesta, el 27 de octubre de 2010, y aunque hubieramos logrado medir con absoluta exactitud, a los &#8216;15 minutos&#8217; los numeros ya habran fluctuado.</p>
 <p>Volviendo al modelo, usemoslo para contar cuantos chicos se encuentran en la zona de vecindad de cada escuela. Es decir, para cada escuela, cuantos chicos se estima que la tengan como la mas cercana, sumando la poblacion de chicos en los radios censales incluidos en la zona de vecindad, y fraccionando aquellos radios censales que tienen a mas de una escuela como la mas cercana.</p>
 <p>Parece complicado, pero esta operacion se puede hacer sin muchas vueltas aprovechando las funcionalidades de los GeoDataFrames de geopandas y los poligonos de shapely. Veamos como...</p>
+<p>y ahora...</p>
 <p>Vamos a calcular ahora, para todas las intersecciones la fraccion de area del redio censal que cae en cada zona de vecindad (Voronoi).</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-1-bc466bdc7861&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+<span class="gp">In [1]: </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-<span class="gp">In [2]: </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-2-5e5ca6e14187&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
-
-<span class="c1">#iteramos las filas del dataset de intersecciones.</span>
-<span class="gp">In [3]: </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+<span class="go">#iteramos las filas del dataset de intersecciones.</span>
+<span class="gp">In [1]: </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
 <span class="gp">   ...: </span>    <span class="n">df</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_y&#39;</span><span class="p">]))</span>
 <span class="gp">   ...: </span>    <span class="n">df</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">area</span><span class="o">/</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">area</span><span class="p">))</span>
 <span class="gp">   ...: </span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-3-4b0ec71c0a23&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">df</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_y&#39;</span><span class="p">]))</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">df</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">area</span><span class="o">/</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">area</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> 
 
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+<span class="go"># Construimos df_intersect multiplicando las fracciones de interseccion por la cantidad total de area, poblacion, etc.</span>
+<span class="gp">In [1]: </span><span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;varon&#39;</span><span class="p">,</span><span class="s1">&#39;mujer&#39;</span><span class="p">,</span><span class="s1">&#39;totalpobl&#39;</span><span class="p">,</span><span class="s1">&#39;hogares&#39;</span><span class="p">,</span><span class="s1">&#39;persona_13&#39;</span><span class="p">,</span><span class="s1">&#39;area_km2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">])))</span>
 
-<span class="c1"># Construimos df_intersect multiplicando las fracciones de interseccion por la cantidad total de area, poblacion, etc.</span>
-<span class="gp">In [4]: </span><span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;varon&#39;</span><span class="p">,</span><span class="s1">&#39;mujer&#39;</span><span class="p">,</span><span class="s1">&#39;totalpobl&#39;</span><span class="p">,</span><span class="s1">&#39;hogares&#39;</span><span class="p">,</span><span class="s1">&#39;persona_13&#39;</span><span class="p">,</span><span class="s1">&#39;area_km2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">])))</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-4-fce08b9995b0&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;varon&#39;</span><span class="p">,</span><span class="s1">&#39;mujer&#39;</span><span class="p">,</span><span class="s1">&#39;totalpobl&#39;</span><span class="p">,</span><span class="s1">&#39;hogares&#39;</span><span class="p">,</span><span class="s1">&#39;persona_13&#39;</span><span class="p">,</span><span class="s1">&#39;area_km2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">])))</span>
+<span class="gp">In [1]: </span><span class="n">df_intersect</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+<span class="go"># Agregar un prefijo para identificar estas columnas.</span>
+<span class="gp">In [1]: </span><span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df_intersect</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s1">&#39;intersect_&#39;</span><span class="p">)</span>
 
-<span class="gp">In [5]: </span><span class="n">df_intersect</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-5-4f609567f184&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_intersect</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;index_voronoi&#39;</span><span class="p">,</span><span class="s1">&#39;index_radio&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">In [1]: </span><span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="ne">NameError</span>: name &#39;df_intersect&#39; is not defined
-
-<span class="c1"># Agregar un prefijo para identificar estas columnas.</span>
-<span class="gp">In [6]: </span><span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df_intersect</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s1">&#39;intersect_&#39;</span><span class="p">)</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-6-5609dfb1d426&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_intersect</span> <span class="o">=</span> <span class="n">df_intersect</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s1">&#39;intersect_&#39;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;df_intersect&#39; is not defined
-
-<span class="gp">In [7]: </span><span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-7-7e52215069cb&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
-
-<span class="gp">In [8]: </span><span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-8-83a35005d8d5&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+<span class="gp">In [1]: </span><span class="n">df_intersect</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;intersect_portion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 </div>
 <p>Ahora agregamos en cada vecindad de escuela la cantidad total de gente, y de paso agregamos el area para poder detectar si hay inconsistencias.</p>
@@ -261,7 +211,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Henrikki Tenkanen.
-      Last updated on Jan 07, 2018.
+      Last updated on Jan 10, 2018.
 
     </p>
   </div>

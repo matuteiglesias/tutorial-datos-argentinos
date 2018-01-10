@@ -173,25 +173,25 @@ El archivo <cite>PERSONA-P03.csv</cite> contiene informacion recopilada del Cens
 <span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go"></span>
 <span class="go">           radio  edad_0  edad_1  edad_2  edad_3  edad_4  edad_5  edad_6  \</span>
-<span class="go">13483   60630605       1       2       1       1       1       0       1   </span>
-<span class="go">16210   63510607      10       8       7       6      15       4       9   </span>
-<span class="go">49277  821260203       1       1       0       1       0       0       1   </span>
-<span class="go">45540  780211010      24      31      24      27      25      17      21   </span>
-<span class="go">44529  700771006      24      26      22      25      23      27      17   </span>
+<span class="go">37659  500070204      12      11       8       9      12       9       7   </span>
+<span class="go">1890    20090204      12      18      12      10      11      17      13   </span>
+<span class="go">42256  620421903      16      15       8       7      13      19      19   </span>
+<span class="go">27121  141050404       4       4       3       4       4       2       7   </span>
+<span class="go">22210   67840810       8       8       7       9       2      12       6   </span>
 
 <span class="go">       edad_7  edad_8  ...    edad_102  edad_103  edad_104  edad_105  \</span>
-<span class="go">13483       0       2  ...           0         0         0         0   </span>
-<span class="go">16210      10      14  ...           0         0         0         0   </span>
-<span class="go">49277       0       1  ...           0         0         0         0   </span>
-<span class="go">45540      26      22  ...           0         0         0         0   </span>
-<span class="go">44529      14      23  ...           0         0         0         0   </span>
+<span class="go">37659       7      12  ...           0         0         0         0   </span>
+<span class="go">1890       13       6  ...           0         0         0         0   </span>
+<span class="go">42256      13      12  ...           0         0         0         0   </span>
+<span class="go">27121       6       0  ...           0         0         0         0   </span>
+<span class="go">22210      10       8  ...           0         0         0         0   </span>
 
 <span class="go">       edad_106  edad_107  edad_108  edad_109  edad_110  TOTAL  </span>
-<span class="go">13483         0         0         0         0         0     82  </span>
-<span class="go">16210         0         0         0         0         0    824  </span>
-<span class="go">49277         0         0         0         0         0     65  </span>
-<span class="go">45540         0         0         0         0         0   1324  </span>
-<span class="go">44529         0         0         0         0         0   1179  </span>
+<span class="go">37659         0         0         0         0         0    876  </span>
+<span class="go">1890          0         0         0         0         0    982  </span>
+<span class="go">42256         0         0         0         0         0    888  </span>
+<span class="go">27121         0         0         0         0         0    171  </span>
+<span class="go">22210         0         0         0         0         0    658  </span>
 
 <span class="go">[5 rows x 113 columns]</span>
 </pre></div>
@@ -223,30 +223,25 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="go"># Muestra de la data</span>
 <span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
-<span class="go">          link codpcia coddpto codloc            provincia  \</span>
-<span class="go">120   06168010      06     168    010         Buenos Aires   </span>
-<span class="go">1462  26028020      26     028    020               Chubut   </span>
-<span class="go">3403  86154010      86     154    010  Santiago del Estero   </span>
+<span class="go">          link codpcia coddpto codloc     provincia   departamen  \</span>
+<span class="go">1271  18007010      18     007    010    Corrientes  Bella Vista   </span>
+<span class="go">665   10070010      10     070    010     Catamarca       La Paz   </span>
+<span class="go">160   06210050      06     210    050  Buenos Aires    Chacabuco   </span>
 
-<span class="go">               departamen       localidad func_loc tiploc tip2loc  \</span>
-<span class="go">120              Castelli        Castelli        3      1       0   </span>
-<span class="go">1462  Florentino Ameghino       Garayalde        0      1       0   </span>
-<span class="go">3403            Rivadavia  Colonia Alpina        0      1       0   </span>
+<span class="go">           localidad func_loc tiploc tip2loc              ...               \</span>
+<span class="go">1271     Bella Vista        3      1       0              ...                </span>
+<span class="go">665   Casa de Piedra        0      1       0              ...                </span>
+<span class="go">160           Rawson        0      1       0              ...                </span>
 
-<span class="go">                         ...                       longitud        xgk  \</span>
-<span class="go">120                      ...                       57 48 26  5697503.0   </span>
-<span class="go">1462                     ...                       66 36 58  2688983.0   </span>
-<span class="go">3403                     ...                       62 06 16  4586363.0   </span>
+<span class="go">      longitud        xgk        ygk  varones  mujeres  personas  hogares  \</span>
+<span class="go">1271  59 02 38  6299892.0  6845772.0  14199.0  14872.0   29071.0   7738.0   </span>
+<span class="go">665   65 30 59  3546835.0  6720840.0    126.0    125.0     251.0     68.0   </span>
+<span class="go">160   60 04 04  5493789.0  6170906.0   1018.0   1105.0    2123.0    750.0   </span>
 
-<span class="go">            ygk  varones  mujeres  personas  hogares  viv_part_h  viv_part  \</span>
-<span class="go">120   6004107.0   3259.0   3600.0    6859.0   2261.0      2216.0    2609.0   </span>
-<span class="go">1462  5049159.0     12.0      6.0      18.0     10.0         8.0      15.0   </span>
-<span class="go">3403  6675033.0    212.0    191.0     403.0    103.0        70.0     106.0   </span>
-
-<span class="go">                                         geometry  </span>
-<span class="go">120                     POINT (4238610.5 5975017)  </span>
-<span class="go">1462                    POINT (3451657 5052448.5)  </span>
-<span class="go">3403  POINT (3875718.849279806 6668756.009733906)  </span>
+<span class="go">      viv_part_h  viv_part                      geometry  </span>
+<span class="go">1271      7305.0    8047.0    POINT (4181856.25 6827445)  </span>
+<span class="go">665         68.0      89.0       POINT (3546755 6720631)  </span>
+<span class="go">160        734.0     932.0  POINT (4044460.75 6154746.5)  </span>
 
 <span class="go">[3 rows x 21 columns]</span>
 </pre></div>
@@ -292,29 +287,29 @@ attribute:</p>
 <span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">       toponimo_i       link  varon  mujer  totalpobl  hogares  viviendasp  \</span>
-<span class="go">14587      308849  065391109  659.0  669.0     1328.0    359.0       367.0   </span>
-<span class="go">12669      313992  068400601  726.0  748.0     1474.0    407.0       352.0   </span>
-<span class="go">10260      313901  068331401  298.0  299.0      597.0    204.0       252.0   </span>
-<span class="go">8632       302461  063574303  110.0  129.0      239.0    107.0       394.0   </span>
-<span class="go">980        300102  061340306  376.0  456.0      832.0    308.0       370.0   </span>
+<span class="go">18227      300489  062031608  444.0  466.0      910.0    306.0       348.0   </span>
+<span class="go">10511      308365  065150805  391.0  436.0      827.0    251.0       236.0   </span>
+<span class="go">16714      307859  064903204  610.0  602.0     1212.0    301.0       280.0   </span>
+<span class="go">5006       310707  066380807  230.0  232.0      462.0    167.0       220.0   </span>
+<span class="go">3642       302272  063573701  162.0  212.0      374.0    213.0       494.0   </span>
 
 <span class="go">       viv_part_h                                           geometry  </span>
-<span class="go">14587       330.0  POLYGON ((4169964.215480035 6136000.692244405,...  </span>
-<span class="go">12669       314.0  POLYGON ((4179565.430868901 6149912.314181272,...  </span>
-<span class="go">10260       204.0  POLYGON ((3982185.584483103 5699789.601677124,...  </span>
-<span class="go">8632        106.0  POLYGON ((4244196.871696203 5759424.983715327,...  </span>
-<span class="go">980         303.0  POLYGON ((4160823.760193204 6097519.94783567, ...  </span>
+<span class="go">18227       299.0  POLYGON ((3860232.645000254 5843346.281277587,...  </span>
+<span class="go">10511       218.0  POLYGON ((4174441.452777574 6158606.134024465,...  </span>
+<span class="go">16714       260.0  POLYGON ((4192696.619190431 6130002.530785869,...  </span>
+<span class="go">5006        161.0  POLYGON ((4159354.38353444 6165615.985227118, ...  </span>
+<span class="go">3642        208.0  POLYGON ((4242974.765324512 5759720.187584225,...  </span>
 </pre></div>
 </div>
 <p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b7eea5ecb10&gt;</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2acddeaeeb10&gt;</span>
 </pre></div>
 </div>
 <p>Que nos grafica el area de la fila 10 con un dibujito.</p>
 <p>Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar &#8216;dpto_link&#8217; que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[12]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b7eea5ecb10&gt;</span>
+<span class="gh">Out[12]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2acddeaeeb10&gt;</span>
 </pre></div>
 </div>
 <p>Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloreamos segun la provincia, para ilustrar una de las posibilidades.</p>
@@ -360,7 +355,7 @@ attribute:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Henrikki Tenkanen.
-      Last updated on Jan 07, 2018.
+      Last updated on Jan 10, 2018.
 
     </p>
   </div>

@@ -1,10 +1,10 @@
 
-.. figure:: img/AutoGIS_banner_2017.png
+.. figure:: img/chicos_por_escuela_banner.png
 
-Welcome to Automating GIS-processes 2017!
-=========================================
+Bienvenid@ a la coleccion de tutoriales con datos argentinos
+============================================================
 
-**Automating GIS-processes** -course teaches you how to do different GIS-related tasks in Python programming language. Each lesson is a tutorial with specific topic(s) where the aim is to learn
+Esta coleccion de **tutoriales con datos argentinos** -course teaches you how to do different GIS-related tasks in Python programming language. Each lesson is a tutorial with specific topic(s) where the aim is to learn
 how to solve common GIS-related problems and tasks using Python tools. In the lessons we use only publicly available data which can be used and downloaded by anyone anywhere. In this course,
 we assume that you know the basics of Python programming. If Python is not familiar to you, we recommend to start with our earlier course that focuses on learning the basics of Python
 from `geo-python.github.io <https://geo-python.github.io>`_.
