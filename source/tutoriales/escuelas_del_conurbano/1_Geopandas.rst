@@ -7,11 +7,13 @@ Jupyter Notebook es una poderosa herramienta que permite a los usuarios de Pytho
 
 **¿Por qué debería usar un Jupyter Notebook?**
 
-Jupyter Notebook ha ganado enorme popularidad en la comunidad de Python data science en los últimos años por una variedad de razones. Segun el usuario de GIS Alberto Nieto, Jupyter Notebook es extremadamente útil porque: 
+Jupyter Notebook ha ganado enorme popularidad en la comunidad de Python data science en los últimos años por una variedad de razones. Segun el usuario de GIS `Alberto Nieto <https://blogs.esri.com/esri/arcgis/author/Alberto-149/>`_, Jupyter Notebook es extremadamente útil porque: 
 
 **Permite probar lineas 'borrador' de codigo**
 
 Los Jupyter notebooks son extremadamente útiles cuando no hay un proceso final definido y aún estamos en la fase de creación de prototipos (o sea probando que cosas podrian funcionar, o no). Esto se debe principalmente a que el código se escribe en celdas independientes, que pueden ejecutarse independientemente del resto del Ecódigo. Esto nos permite probar rápidamente un paso específico sin volver a ejecutar el código desde el comienzo cada vez.
+
+.. image:: img/jupyter_screenshot.png
 
 **La visualización de Dataframes Pandas**
 
@@ -114,8 +116,7 @@ Fijense que hay una columna que se llama ``geometry``. En general la informacion
 
 Que nos grafica el area de la fila 10 con un dibujito.
 
-.. image:: img/image.png
-TODO
+.. image:: img/shapely_geometry.png
 
 Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar 'dpto_link' que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.
     
@@ -140,8 +141,6 @@ Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloream
     
     plt.show()
     
-.. image:: img/image.png
-
-TODO
+.. image:: img/localidades_provincia.png
 
 Los ejemplos mostrados aqui estan en el notebook 1_Geopandas.ipynb 
