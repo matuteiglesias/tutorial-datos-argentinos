@@ -27,8 +27,8 @@ Podes agregar contenido (tutoriales, links de interes, u otro material) a traves
 Consulta tus dudas, actualmente el sitio es mantenido por: Matias Nehuen Iglesias (matuteiglesias@gmail.com)
 
 
-Contents
---------
+Contenidos
+----------
 
 .. toctree::
    :maxdepth: 2
