@@ -117,6 +117,7 @@ Fijense que hay una columna que se llama ``geometry``. En general la informacion
 Que nos grafica el area de la fila 10 con un dibujito.
 
 .. image:: ../../img/shapely_geometry.png
+   :scale: 50 %
 
 Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar 'dpto_link' que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.
     
