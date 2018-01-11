@@ -20,6 +20,7 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
 
 
 .. ipython:: python
+
     import pandas as pd
     import matplotlib.pyplot as plt
     %matplotlib inline
@@ -61,7 +62,7 @@ La otra cuestion recurrente eran nombres de barrios y localidades. La mayoria de
 
 Para hacer estas modificaciones es que escribi las funciones filtrar_entre_calles() y filtrar_barrio(). Las uso para crear una nueva columna de direcciones ('Address_2') formateada. La idea es que si falla la primera, esta la segunda. Si falla esta, esta la tercera. Y luego de eso, en este caso ya el 90% de las direcciones logran ser identificadas. En este punto, ya es concebible localizar las direcciones de forma mas manual, o bien, desecharlas ya que no son demasiadas. Estas funciones nos pasan de:
 
-H. YRIGOYEN E/ L.N. ALEM Y BANCALARI 50  , MATHEU, ESCOBAR, Buenos Aires, Argentina
+'H. YRIGOYEN E/ L.N. ALEM Y BANCALARI 50  , MATHEU, ESCOBAR, Buenos Aires, Argentina'
 
 a
 
@@ -75,6 +76,7 @@ aumentando en cada paso las chances te geolocalizar exitosamente. A continuacion
 
 
 .. ipython:: python
+
 	import re
 
 	def filtrar_entre_calles(string):
@@ -92,7 +94,7 @@ aumentando en cada paso las chances te geolocalizar exitosamente. A continuacion
 	    try:
 		m = re.search("\d", s)
 		start = s.index( 'e/' )
-	#         end = s.index( last, start )
+        	# end = s.index( last, start )
 		end = m.start()
 		return string[:start] + string[end:]
 	    except:
@@ -136,6 +138,7 @@ aumentando en cada paso las chances te geolocalizar exitosamente. A continuacion
 Finalmente vamos a la funcion de geolocalizacion. Esta version necesita adaptarse para tratar con la quota diaria de consultas. Pero mientras tu dataset necesite menos de 2500 busquedas, no te tendrias que preocupar. 
 
 .. ipython:: python
+
 	import json
 	import time
 	import urllib
@@ -184,6 +187,7 @@ Finalmente vamos a la funcion de geolocalizacion. Esta version necesita adaptars
 Ahora...
 
 .. ipython:: python
+
 	dataframe = escuelas_AMBA_secundaria_estatal
 	col, col_2, col_3 = 'Address', 'Address_2', 'Address_3'
 	API_key = 'AIzaSyDjBFMZlNTyds2Sfihu2D5LTKupKDBpf6c'
