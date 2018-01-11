@@ -17,7 +17,7 @@ En este repositorio la comunidad puede acumular:
 Tutoriales, datasets, links y otros materiales se pueden anadir facilmente escribiendo texto (como .rst) e integrandolo al repositorio principal a traves de GitHub.
 
 Sphinx usa **archivos .rst** ([reStucturedText] (https://en.wikipedia.org/wiki/ReStructuredText)). Por lo tanto, las paginas deben escribirse en tales archivos. **Es fácil, intuitivo y conveniente!**. Es similar a Markdown (casi como escribir en el bloc de notas).
-Todos los archivos .rst deben colocarse en la carpeta [/source] (/source) que es el directorio donde Sphinx busca la documentación. ** Esos archivos .rst son los que modificas para cambiar la pagina web**.
+Todos los archivos .rst deben colocarse en la carpeta [/source] (/source) que es el directorio donde Sphinx busca la documentación. **Esos archivos .rst son los que modificas para cambiar la pagina web**.
 
 #### Proponer los cambios a traves de GitHub
 
@@ -27,10 +27,12 @@ Es decir
  - Push request
  - Listo. El sitio web se actualizara.
 
-###### Crea una copia en tu computadora
+El resto de este readme explica estos pasos en detalle:
+
+###### Clonar una copia en tu computadora
 
    Primero necesitas un fork local del proyecto. Hace click el el boton "fork" en GitHub. Esto crea una copia del repositorio en tu propia cuanta de GitHub y vas a ver la anotacion de que se trata de un fork debajo del nombre del proyecto. 
-   Ahora necesitas una copia local en tu disco. Vas a una carpeta en tu PC y haces
+   Ahora necesitas una copia local en tu disco. Vas a una carpeta en tu PC y haces (asume git instalado)
    
 ~~~~
 $ git init
