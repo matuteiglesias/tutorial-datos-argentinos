@@ -1,10 +1,31 @@
-Pandas para trabajar con tablas
-===============================
 
-Para todo lo que tiene que ver con datos que podrian ir en tablas (al estilo MS Excel) el modulo 'pandas' es una herramienta muy util. Nos permite combinar tablas, hacer operaciones en las filas y columnas, agrupar segun los valores en algunas columnas y hacer operaciones. En fin, nos permite hacer y deshacer lo que se nos ocurra. 
 
-Vamos a bajar y extraer la data `datos.zip <../datos/datos.zip>`. 
-El archivo `PERSONA-P03.csv` contiene informacion recopilada del Censo Nac. de Hogares y viviendas 2010. En este caso, poder tener la informacion en un formato tan conveniente se lo debemos a Manuel Aristaran, que `colgo <http://dump.jazzido.com/CNPHV2010-RADIO/>` los resultados de queries a la base de datos REDATAM en donde estan registrados los resultados del ultimo censo en Argentina.
+Intro: Jupyter notebooks, Pandas DataFrames, y GIS
+==================================================
+
+Jupyter Notebook es una poderosa herramienta que permite a los usuarios de Python crear y compartir documentos que contengan código en vivo, visualizaciones, textos explicativos y ecuaciones. El término "notebook" se refiere a que la herramienta Jupyter te permite escribir fragmentos de código ejecutable autónomo (las "celdas"), anotar cada procedimiento e incluso visualizar los datos con los que está trabajando en cualquier paso del camino.
+
+**¿Por qué debería usar un Jupyter Notebook?**
+
+Jupyter Notebook ha ganado enorme popularidad en la comunidad de Python data science en los últimos años por una variedad de razones. Segun el usuario de GIS Alberto Nieto, Jupyter Notebook es extremadamente útil porque: 
+
+**Permite probar lineas 'borrador' de codigo**
+
+Los Jupyter notebooks son extremadamente útiles cuando no hay un proceso final definido y aún estamos en la fase de creación de prototipos (o sea probando que cosas podrian funcionar, o no). Esto se debe principalmente a que el código se escribe en celdas independientes, que pueden ejecutarse independientemente del resto del Ecódigo. Esto nos permite probar rápidamente un paso específico sin volver a ejecutar el código desde el comienzo cada vez.
+
+**La visualización de Dataframes Pandas**
+
+**Pandas** (Python Data Analysis Library) proporciona estructuras de datos (tablas, etc) de alto rendimiento y fáciles de usar que te permiten trabajar con gran cantidad de datos extremadamente rápido. El objeto de datos principal es un Dataframe, que es esencialmente una tabla en memoria que permite operaciones muy potentes, como vamos a ver.
+
+Jupyter Notebook te permite visualizar estas tablas en cualquier punto de su computadora portátil. Esto es extremadamente útil porque podes ver el estado de tus datos (y el resultado de cada accion del código sobre los datos) al ejecutar cada paso.
+
+Pandas nos permite combinar tablas, hacer operaciones en las filas y columnas, agrupar segun los valores en algunas columnas y hacer operaciones. En fin, **nos permite hacer y deshacer lo que se nos ocurra con las tablas de datos**. 
+
+Manos a la obra! Datos Censo 2010 (Indec)
+-----------------------------------------
+**Poblacion por edad y radio censal. Censo 2010**
+
+Vamos a bajar y extraer el archivo `PERSONA-P03.csv` de la `carpeta de datos <https://github.com/matuteiglesias/tutorial-datos-argentinos/tree/master/datos>`_ contiene informacion recopilada del Censo Nac. de Hogares y viviendas 2010. En este caso, poder tener la informacion en un formato tan conveniente se lo debemos a Manuel Aristaran, que `colgo <http://dump.jazzido.com/CNPHV2010-RADIO/>`_ los resultados de queries a la base de datos REDATAM en donde estan registrados los resultados del ultimo censo en Argentina.
 
 En particular el archivo que tenemos aca tiene una columna con los codigos que identifican los radios censales, con el nombre 'link'. El resto de las columnas corresponden a cada edad posible en anios, de forma que cada fila puede tomarse como informacion de la piramide poblacional de un radio censal. Con este dataset podemos saber esencialmente cuanta gente de cada edad habia en cada lugar en octubre de 2010.
 
@@ -42,8 +63,7 @@ En una terminal (ubicarse en el directorio donde)
 
 Ahora vamos a usar el modulo geopandas, que esencialmente es lo mismo que pandas, con la posibilidad de incluir formas geometricas (puntos, lineas, poligonos) y hacer operaciones con ellos.
 
-Coordinate reference system (CRS)
----------------------------------
+**Coordinate reference system (CRS)**
 
 Un GeoDataFrame que se lee de un ShapeFile contiene por lo general informacion sobre el sistema de coordenadas en el cual esta proyectada la data.
 
@@ -66,8 +86,7 @@ Al igual que en un DataFrame corriente de pandas, podemos por ejemplo preguntar 
 
     pxlocdatos.columns
 
-We can see the current coordinate reference system from ``.crs``
-attribute:
+Podemos ver el sistema de referencia con el atributo ``.crs``:
 
 .. ipython:: python
 
@@ -95,16 +114,14 @@ Fijense que hay una columna que se llama ``geometry``. En general la informacion
 
 Que nos grafica el area de la fila 10 con un dibujito.
 
+.. image:: img/image.png
+TODO
+
 Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar 'dpto_link' que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.
-
-
-.. ipython:: python
-
-    Buenos_Aires_datos['geometry'][10]
     
 Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloreamos segun la provincia, para ilustrar una de las posibilidades.
 
-.. code:: python
+.. ipython:: python
     
     #import the standard plotting module
     import matplotlib.pyplot as plt
@@ -123,4 +140,8 @@ Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloream
     
     plt.show()
     
+.. image:: img/image.png
+
+TODO
+
 Los ejemplos mostrados aqui estan en el notebook 1_Geopandas.ipynb 

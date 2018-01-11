@@ -1,6 +1,6 @@
 
-Instalar Python + packages
-==========================
+Instalar Python + GIS
+=====================
 
 **Las herramientas que vamos a usar**
 
@@ -8,8 +8,8 @@ Los codigos que incluyo aca son en lenguage Python. Nunca es tarde para empezar 
 
 El codigo en Python esta pensado para ser escrito en un archivo y correrlo todo de una vez. Muchas veces es mas deseable correr solamente los ultimos renglones, sobretodo si estamos con un codigo que demora en correr y donde toda la primera parte no tiene ningun problema. Ademas en el caso que hayamos calculado algunas variables, quisieramos que sean recordadas por el momento y poder volver a usarlas facilmente. Por este tipo de cuestiones practicas, y otras mas, se desarrollaron las Jupyter notebooks, que nos permiten correr los codigos Python con esta modalidad mas practica. Para instalar `ver aca. <https://jupyter.readthedocs.io/en/latest/install.html#new-to-python-and-jupyter>`
 
-Install Python + packages en Windows
-------------------------------------
+Install Python + GIS en Windows
+-------------------------------
 
 Estos pasos se testearon en Windows 7 and 10 con Anaconda3 64 bit, usando conda v4.3.29. (Octubre 2017)
 
@@ -53,12 +53,11 @@ Se puede testear que las instalaciones funcionaron corriendo en la consola IPyth
      import scipy
      import shapely
      import matplotlib.pyplot as plt
-     import pysal
 
 Si no recibis errores, deberia estar funcionando!
 
-Install Python + packages en Linux / Mac
-----------------------------------------
+Install Python + GIS en Linux / Mac
+-----------------------------------
 
 Esto funciona en Ubuntu 16.04 y posiblemente tambien en Mac.
 
@@ -100,5 +99,5 @@ Instalar packages con conda (y pip) corriendo en una terminal los siguientes com
 Si no funcionara alguna instalacion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Si llegara a faltar algun otro package, ya te imaginas como instalarlo, igualmente lo mas recomendable **buscar en Google** como hacer cualquier cosa que necesites.
+Si llegara a faltar algun otro package, lo mas recomendable **buscar en Google** como hacer cualquier cosa que necesites. No hace falta aclarar que en internet se puede encontrar practicamente toda la informacion necesaria para instalar cualquier modulo y resolver asuntos tecnicos.
 
