@@ -55,11 +55,11 @@ $ git remote add upstream https://github.com/matuteiglesias/tutorial-datos-argen
 Ahora tenes dos remotos para este proyecto en el disco:
 
 - *origin* que apunta a tu fork del proyecto. Podes leer y escribir en este remoto.
-- *upstream* que apunta al repositorio GitHub del proyecto principal. Solo podes leer desde este control remoto.
+- *upstream* que apunta al repositorio GitHub del proyecto principal. Solo podes leer desde este remoto.
 
 ###### Hace tus cambios
 
-Arriba encontras info sobre editar y crear tus paginas para anadir. Ademas del contenido, puede haber otros aspectos que necesiten mantencion.
+Arriba encontras info sobre editar y crear tus paginas para anadir. Ademas del contenido, puede haber otros aspectos que necesiten mantencion, las contribuciones pueden ser tambien sobre el software del repositorio.
 
 Para empezar, creamos una nueva *branch* desde *master*:
 
@@ -71,14 +71,12 @@ $ git checkout branch-de-trabajo
 
 En primer lugar, nos aseguramos de que estamos en la rama principal. Luego, el comando *git pull* sincroniza nuestra copia local con el proyecto ascendente y git push lo sincroniza con nuestro proyecto bifurcado GitHub. 
 
-Ahora puedes hacer los cambios que quieras. 
-
-Podes consultar el status con el comando
+Ahora podes hacer los cambios que quieras. 
+El comando
 ~~~~
 $ git status
 ~~~~
-
-que siempre es muy util. Nos va a decir cuales son los archivos con cambios. Elegi aquellos que quieras combinar con el proyecto central y agregalos con el comando `add`, o bien anadi todos ellos haciendo:
+siempre es muy util. Nos va a decir cuales son los archivos con cambios. Elegi aquellos que quieras combinar con el proyecto central y agregalos con el comando `add`, o bien anadi todos ellos haciendo:
 
 ~~~~
 $ git add -A
@@ -93,8 +91,9 @@ Para eso necesitas enviar tu rama al origen y algunos clicks en GitHub.
 
 Para impulsar una nueva sucursal:
 
+~~~~
 $ git push origin branch-de-trabajo
-
+~~~~
 Esto crea la rama (branch) en tu proyecto GitHub. Volve a la pagina web de la bifurcación del proyecto (https://github.com/tu-usuario/tutorial-datos-argentinos) y verás la nueva rama con un botón de "Compare & pull request". Click.
 
 Provee un pequeno titulo para la *pull request* y alguna descripcion opcional. Si esta todo OK, click en "Create pull request" y listo!
