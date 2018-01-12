@@ -1,10 +1,10 @@
 
 .. figure:: img/chicos_por_escuela_banner.png
 
-.. class:: center
+
 Coleccion de tutoriales con datos argentinos
 ============================================
-.. class:: center
+
 **Bienvenid@**
 
 Este portal tiene la intencion de recopilar material para que aprendamos colectivamente a usar herramientas de procesamiento de datos. El foco esta puesto en las aplicaciones que tienen que ver con la vida social, economica y cultural de la Argentina. Sin entrar en la perorata del *big data*, digamos que en la actualidad la cantidad y calidad de la informacion esta revolucionando varias actividades humanas. Muchos negocios privados son pioneros en explotar la informacion para optimizar sus acciones. En cuanto a lo publico, algunos estados recopilan y procesan informacion sistematicamente para diseniar politicas mas sofisticadas y eficaces y adoptan nuevas tecnicas para funcionar con eficiencia. Todo indica que ignorar esta situacion y continuar con las costumbres anteriores a la era digital nos va a terminar de alejar de la esperanza de un pais prospero y avanzado en el siglo XXI.

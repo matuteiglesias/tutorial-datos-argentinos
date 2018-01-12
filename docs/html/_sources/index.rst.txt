@@ -1,10 +1,10 @@
 
 .. figure:: img/chicos_por_escuela_banner.png
 
-.. class:: center
+
 Coleccion de tutoriales con datos argentinos
 ============================================
-.. class:: center
+
 **Bienvenid@**
 
 Este portal tiene la intencion de recopilar material para que aprendamos colectivamente a usar herramientas de procesamiento de datos. El foco esta puesto en las aplicaciones que tienen que ver con la vida social, economica y cultural de la Argentina. Sin entrar en la perorata del *big data*, digamos que en la actualidad la cantidad y calidad de la informacion esta revolucionando varias actividades humanas. Muchos negocios privados son pioneros en explotar la informacion para optimizar sus acciones. En cuanto a lo publico, algunos estados recopilan y procesan informacion sistematicamente para diseniar politicas mas sofisticadas y eficaces y adoptan nuevas tecnicas para funcionar con eficiencia. Todo indica que ignorar esta situacion y continuar con las costumbres anteriores a la era digital nos va a terminar de alejar de la esperanza de un pais prospero y avanzado en el siglo XXI.
@@ -49,4 +49,25 @@ Contenidos
    :maxdepth: 2
    :caption: Links que valen la pena
 
-   info/Links.rst
+Links de valor
+--------------
+
+**Formacion**
+
+`Como profundizar en Data Science <https://www.facebook.com/notes/data-science-argentina/c%C3%B3mo-profundizar-en-data-science/1257387361074142/>`_
+Este documento recopila info util para tod@s los que quieran aprender. Info de carreras del ambito publico y privadas, libros, cursos y mas.
+
+**Sobre datos**
+
+`Paquete apertura de datos, Ministerio de Modernizacion <http://paquete-apertura-datos.readthedocs.io/es/stable/index.html>`_.
+
+`Datos.gob <http://datos.gob.ar/>`_.
+
+`Unidades Geoestadísticas - Cartografía y códigos geográficos del Sistema Estadístico Nacional <https://www.indec.gov.ar/codgeo.asp>`_.
+
+
+**Investigacion**
+
+`Ayub S., Dequino D. (2011). La transparencia en los subsidios al sector privado <https://www.cippec.org/publicacion/la-transparencia-en-los-subsidios-al-sector-privado-hallazgos-y-recomendaciones-sobre-los-casos-de-transporte-gas-y-alimentos-de-consumo-masivo/>`_
+
+El caso de la informacion sobre los subsidios en el ONCCA da un ejemplo de que se puede y debe adaptar los metodos de manejo de la informacion en el estado, por la transparencia, pero ademas por la eficiencia. Es decir lograr que el Estado cumpla con objetivos que se propone.

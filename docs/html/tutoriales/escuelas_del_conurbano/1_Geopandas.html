@@ -119,10 +119,6 @@
 <li class="toctree-l1"><a class="reference internal" href="3_Mapas.html">Mapas con geopandas y shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_Operaciones_con_poligonos.html">Mas operaciones con poligonos</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Links que valen la pena</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../info/Links.html">Links valiosos</a></li>
-</ul>
 
             
           
@@ -214,25 +210,25 @@
 <span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go"></span>
 <span class="go">           radio  edad_0  edad_1  edad_2  edad_3  edad_4  edad_5  edad_6  \</span>
-<span class="go">46863  820630703       5       2       4       6       3      11       6   </span>
-<span class="go">32379  300080709       2       0       0       0       2       1       1   </span>
-<span class="go">4347    60352707      48      36      45      38      32      35      35   </span>
-<span class="go">47969  820843008      10      12      14      11      18      15      11   </span>
-<span class="go">42102  620420104       0       3       2       0       0       0       1   </span>
+<span class="go">52175  901190306      33      20      26      20      29      27      26   </span>
+<span class="go">14744   61960204      11      14      11      13      12      14      15   </span>
+<span class="go">3725    60281501      17      18      16      24      16      18      17   </span>
+<span class="go">45950  820210409      10      13       6       5       9      12      10   </span>
+<span class="go">50763  900141614      28      22      30      27      23      33      28   </span>
 
 <span class="go">       edad_7  edad_8  ...    edad_102  edad_103  edad_104  edad_105  \</span>
-<span class="go">46863       8       7  ...           0         0         0         0   </span>
-<span class="go">32379       1       2  ...           0         0         0         0   </span>
-<span class="go">4347       36      41  ...           0         0         0         0   </span>
-<span class="go">47969      14      17  ...           0         0         0         0   </span>
-<span class="go">42102       2       0  ...           0         0         0         0   </span>
+<span class="go">52175      17      27  ...           0         0         0         0   </span>
+<span class="go">14744       8      10  ...           0         0         0         0   </span>
+<span class="go">3725       17      21  ...           0         0         0         0   </span>
+<span class="go">45950      10      10  ...           0         0         0         0   </span>
+<span class="go">50763      35      31  ...           0         0         0         0   </span>
 
 <span class="go">       edad_106  edad_107  edad_108  edad_109  edad_110  TOTAL  </span>
-<span class="go">46863         0         0         0         0         0    581  </span>
-<span class="go">32379         0         0         0         0         0     66  </span>
-<span class="go">4347          0         0         0         0         0   1557  </span>
-<span class="go">47969         0         0         0         0         0    948  </span>
-<span class="go">42102         0         0         0         0         0     69  </span>
+<span class="go">52175         0         0         0         0         0   1370  </span>
+<span class="go">14744         0         0         0         0         0    707  </span>
+<span class="go">3725          0         0         0         0         0    961  </span>
+<span class="go">45950         0         0         0         0         0    927  </span>
+<span class="go">50763         0         0         0         0         0   1406  </span>
 
 <span class="go">[5 rows x 113 columns]</span>
 </pre></div>
@@ -263,30 +259,25 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="go"># Muestra de la data</span>
 <span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
-<span class="go">          link codpcia coddpto codloc provincia       departamen  \</span>
-<span class="go">3097  82077080      82     077    080  Santa Fe       9 de Julio   </span>
-<span class="go">2583  66042007      66     042    007     Salta         Chicoana   </span>
-<span class="go">1429  22154040      22     154    040     Chaco  Sargento Cabral   </span>
+<span class="go">          link codpcia coddpto codloc     provincia    departamen  \</span>
+<span class="go">286   06427010      06     427    010  Buenos Aires    La Matanza   </span>
+<span class="go">1422  22140050      22     140    050         Chaco  San Fernando   </span>
+<span class="go">421   06623030      06     623    030  Buenos Aires     Pergamino   </span>
 
-<span class="go">                  localidad func_loc tiploc tip2loc  \</span>
-<span class="go">3097                Tostado        3      1       0   </span>
-<span class="go">2583  Barrio Santa Teresita        0      1       0   </span>
-<span class="go">1429       Ingeniero Barbet        0      1       0   </span>
+<span class="go">           localidad func_loc tiploc tip2loc              ...               \</span>
+<span class="go">286       La Matanza        3      2       4              ...                </span>
+<span class="go">1422  Puerto Vilelas        0      2       5              ...                </span>
+<span class="go">421         Guerrico        0      1       0              ...                </span>
 
-<span class="go">                 ...              longitud        xgk        ygk  varones  \</span>
-<span class="go">3097             ...              61 46 19  6765406.0  5327716.0   7014.0   </span>
-<span class="go">2583             ...                        3543129.0  7507231.0    353.0   </span>
-<span class="go">1429             ...              59 28 55  5551422.0  7014088.0    132.0   </span>
+<span class="go">      longitud        xgk        ygk   varones   mujeres   personas   hogares  \</span>
+<span class="go">286   58 33 38  5631925.0  6162385.0  866418.0  908854.0  1775272.0  484757.0   </span>
+<span class="go">1422  58 56 18  5604894.0  6957522.0    4103.0    4175.0     8278.0    2179.0   </span>
+<span class="go">421   60 24 02  5462841.0  6274443.0     377.0     397.0      774.0     265.0   </span>
 
-<span class="go">      mujeres  personas  hogares  viv_part_h  viv_part  \</span>
-<span class="go">3097   7568.0   14582.0   4305.0      4129.0    4846.0   </span>
-<span class="go">2583    368.0     721.0    166.0       165.0     195.0   </span>
-<span class="go">1429    145.0     277.0     70.0        39.0      51.0   </span>
-
-<span class="go">                        geometry  </span>
-<span class="go">3097  POINT (3911236.75 6759289)  </span>
-<span class="go">2583  POINT (3543128.75 7231742)  </span>
-<span class="go">1429     POINT (4147700 6997206)  </span>
+<span class="go">      viv_part_h  viv_part                      geometry  </span>
+<span class="go">286     405216.0  447208.0  POINT (4182491.75 6137973.5)  </span>
+<span class="go">1422      2025.0    2197.0     POINT (4198666 6937804.5)  </span>
+<span class="go">421        259.0     288.0       POINT (4019576 6260295)  </span>
 
 <span class="go">[3 rows x 21 columns]</span>
 </pre></div>
@@ -331,23 +322,23 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">       toponimo_i       link  varon  mujer  totalpobl  hogares  viviendasp  \</span>
-<span class="go">6092       301438  062700714  586.0  590.0     1176.0    331.0       348.0   </span>
-<span class="go">18075      308445  067000210  237.0  263.0      500.0    216.0       264.0   </span>
-<span class="go">10776      299948  061190403  190.0  172.0      362.0    123.0       221.0   </span>
-<span class="go">5605       308362  065150802  523.0  513.0     1036.0    312.0       310.0   </span>
-<span class="go">5747       298752  060353504  384.0  416.0      800.0    246.0       263.0   </span>
+<span class="go">6414       303994  064120305  646.0  719.0     1365.0    426.0       713.0   </span>
+<span class="go">5061       311113  066580302  728.0  641.0     1369.0    329.0       334.0   </span>
+<span class="go">3298       299599  060911410  919.0  948.0     1867.0    522.0       443.0   </span>
+<span class="go">12069      287003  067350502    7.0    4.0       11.0      4.0         6.0   </span>
+<span class="go">659        308059  064904902  459.0  585.0     1044.0    336.0       342.0   </span>
 
 <span class="go">       viv_part_h                                           geometry  </span>
-<span class="go">6092        319.0  POLYGON ((4180746.823549158 6113916.398708752,...  </span>
-<span class="go">18075       213.0  POLYGON ((3817003.645997512 5831928.423781276,...  </span>
-<span class="go">10776       119.0  POLYGON ((4215898.328590137 6091259.880455916,...  </span>
-<span class="go">5605        280.0  POLYGON ((4174755.42971666 6158035.954470803, ...  </span>
-<span class="go">5747        226.0  POLYGON ((4197180.245954935 6138202.139991279,...  </span>
+<span class="go">6414        392.0  POLYGON ((4166212.830254949 6157624.07873194, ...  </span>
+<span class="go">5061        295.0  POLYGON ((4212632.796109378 6131027.34202014, ...  </span>
+<span class="go">3298        411.0  POLYGON ((4210275.101664068 6125280.289114853,...  </span>
+<span class="go">12069         4.0  POLYGON ((4093564.323420777 6187348.409030036,...  </span>
+<span class="go">659         307.0  POLYGON ((4196696.197117927 6126753.37335243, ...  </span>
 </pre></div>
 </div>
 <p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b7718dc5450&gt;</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2af0235e2a10&gt;</span>
 </pre></div>
 </div>
 <p>Que nos grafica el area de la fila 10 con un dibujito.</p>
