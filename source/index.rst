@@ -1,36 +1,40 @@
 
 .. figure:: img/chicos_por_escuela_banner.png
 
-Bienvenid@ a la coleccion de tutoriales con datos argentinos
-============================================================
+.. class:: center
+Coleccion de tutoriales con datos argentinos
+============================================
+.. class:: center
+**Bienvenid@**
 
-Esta coleccion de **tutoriales con datos argentinos** -course teaches you how to do different GIS-related tasks in Python programming language. Each lesson is a tutorial with specific topic(s) where the aim is to learn
-how to solve common GIS-related problems and tasks using Python tools. In the lessons we use only publicly available data which can be used and downloaded by anyone anywhere. In this course,
-we assume that you know the basics of Python programming. If Python is not familiar to you, we recommend to start with our earlier course that focuses on learning the basics of Python
-from `geo-python.github.io <https://geo-python.github.io>`_.
+Este portal tiene la intencion de recopilar material para que aprendamos colectivamente a usar herramientas de procesamiento de datos. El foco esta puesto en las aplicaciones que tienen que ver con la vida social, economica y cultural de la Argentina. Sin entrar en la perorata del *big data*, digamos que en la actualidad la cantidad y calidad de la informacion esta revolucionando varias actividades humanas. Muchos negocios privados son pioneros en explotar la informacion para optimizar sus acciones. En cuanto a lo publico, algunos estados recopilan y procesan informacion sistematicamente para diseniar politicas mas sofisticadas y eficaces y adoptan nuevas tecnicas para funcionar con eficiencia. Todo indica que ignorar esta situacion y continuar con las costumbres anteriores a la era digital nos va a terminar de alejar de la esperanza de un pais prospero y avanzado en el siglo XXI.
 
-Course format
--------------
+Por suerte nuestro pais tiene el talento, la capacidad y los recursos para todavia subirse al tren. Pero justamente no podemos estar esperando toda la vida para *activar*.
 
-The majority of this course will be spent in front of a computer learning to program in the Python language and working on exercises.
-During Teaching Period I, the Automating GIS-processes and `Introduction to Quantitative Geology <https://github.com/Intro-Quantitative-Geology/Course-information>`_ courses met together and focused on
-`learning to program in Python <https://geo-python.github.io>`_. Previously, both these courses lacked sufficient time for students to properly learn the basic concepts of programming in Python.
+En este portal, la comunidad puede aportar datos, material didactico y puntos de vista para avanzar hacia:
 
-The computer exercises will focus on developing basic programming skills using the Python language and applying those skills to various GIS related problems.
-Typical exercises will involve a brief introduction followed by topical computer-based tasks. At the end of the exercises, you may be asked to submit answers
-to relevant questions, some related plots, and/or Python codes you have written or used. You are encouraged to discuss and work together with other students
-on the laboratory exercises, however the laboratory summary write-ups that you submit must be completed individually and must clearly reflect your own work.
+- la formacion de RRHH para la recopilacion de datos sistematica, practica y de facil acceso en el Estado.
+- generar condiciones para el pasaje de datos crudos a conocimiento valioso.
+- que un estado transparente, eficiente e innovador sea una realidad y no un delirio.
+
+Inicialmente el proyecto consta de tutoriales a traves de los cuales se puede compartir conocimiento entre la comunidad, ademas de material de interes, como ser fuentes de datos, links a otras iniciativas complementarias e investigaciones de interes.
+
+**Este proyecto esta en manos de la comunidad!**
+
+Por el momento necesita que se agregue contenido, aunque luego puede convertirse en un sitio de consulta.
+Podes agregar contenido (tutoriales, links de interes, u otro material) a traves del proyecto de GitHub.
+
+Consulta tus dudas, actualmente el sitio es mantenido por: Matias Nehuen Iglesias (matuteiglesias@gmail.com)
 
 
-Contents
---------
+Contenidos
+----------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Information General
+   :caption: Informacion General
 
    info/Instalacion.rst
-   info/Introduccion.rst
 
 .. toctree::
    :maxdepth: 2
@@ -40,3 +44,9 @@ Contents
    tutoriales/escuelas_del_conurbano/2_Geolocalizacion
    tutoriales/escuelas_del_conurbano/3_Mapas.rst
    tutoriales/escuelas_del_conurbano/4_Operaciones_con_poligonos
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Links que valen la pena
+
+   info/Links.rst

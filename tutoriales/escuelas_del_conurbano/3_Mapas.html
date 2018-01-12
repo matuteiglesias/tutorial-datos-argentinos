@@ -19,7 +19,7 @@
     </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Haciendo mapas con shapely y geopandas &mdash; Coleccion de Tutoriales con Datos Argentinos  documentation</title>
+  <title>Mapas con geopandas y shapely &mdash; Coleccion de Tutoriales con Datos Argentinos  documentation</title>
   
 
   
@@ -104,22 +104,24 @@
               
             
             
-              <p class="caption"><span class="caption-text">Information General</span></p>
+              <p class="caption"><span class="caption-text">Informacion General</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../info/Instalacion.html">Instalar Python + GIS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info/Introduccion.html">Introduccion</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorial 1: Escuelas del Conurbano</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1_Geopandas.html">Intro: Jupyter notebooks, Pandas DataFrames, y GIS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2_Geolocalizacion.html">Geolocalizacion</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Haciendo mapas con shapely y geopandas</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mapas con geopandas y shapely</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#ejemplo-cantidad-de-chicos-de-13-a-18-por-radio-censal">Ejemplo: cantidad de chicos de 13 a 18 por radio censal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejemplo-zonas-en-las-que-cada-escuela-es-la-mas-cercana">Ejemplo: zonas en las que cada escuela es la mas cercana</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#guardamos-las-tablas-utiles">Guardamos las tablas utiles</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="4_Operaciones_con_poligonos.html">Mas operaciones con poligonos</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Links que valen la pena</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/Links.html">Links valiosos</a></li>
 </ul>
 
             
@@ -164,7 +166,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>Haciendo mapas con shapely y geopandas</li>
+      <li>Mapas con geopandas y shapely</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -185,8 +187,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="haciendo-mapas-con-shapely-y-geopandas">
-<h1>Haciendo mapas con shapely y geopandas<a class="headerlink" href="#haciendo-mapas-con-shapely-y-geopandas" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="mapas-con-geopandas-y-shapely">
+<h1>Mapas con geopandas y shapely<a class="headerlink" href="#mapas-con-geopandas-y-shapely" title="Permalink to this headline">¶</a></h1>
 <p>A continuacion, vamos a aprovechar la funcionalidad de geopandas y los poligonos de shapely para construir mapas. Primero, vamos a cargar algunas tablas con informacion de poblacion y poligonos de distritos, junto con sus perimetros en formato de poligono shapely.</p>
 <p>El INDEC ofrece tablas con la informacion necesaria (<a class="reference external" href="https://www.indec.gov.ar/codgeo.asp">https://www.indec.gov.ar/codgeo.asp</a>), sin embargo aparece separado en datasets para cada provincia, y los criterios en cada dataset son &#8216;parecidos&#8217; pero nollegan a ser 100% compatibles como deberian. Me refiero a que los nombres de columnas pueden variar ligeramente de provincia a provincia, o que las codificaciones de los distritos pueden llegar a estar en un formato ligeramente diverso, de forma que combinar las tablas no es automatico y tenemos que hacer algunos retoques. Aprovecho para llamar la atencion sobre este tipo de desinteligencias en el registro de datos que nos complican la vida. En el codigo, las van a notar cuando escribo (!!!). Eso significa que es algo que no tendriamos que estar haciendo si los datos estuvieran registrados mas sistematicamente. De todos modos nos sirve para ver como tratar en python pandas estas situaciones que son muy comunes.</p>
 <p>En este caso vamos a combinar las tablas de radios censales (junto con algunos datos de poblacion) de la Ciudad de Buenos Aires (CABA) y la Provincia.</p>
@@ -216,11 +218,29 @@
 </div>
 <p>Bueno, ya tenemos dos tablas con los radios censales de la Ciudad y de Buenos Aires. Que podemos hacer con data en este formato?
 Veamos algunos ejemplos:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">CABA_polygon</span> <span class="o">=</span> <span class="n">CABA_datos</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;prov&#39;</span><span class="p">)[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+
+<span class="gp">In [1]: </span><span class="n">partidos</span> <span class="o">=</span> <span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;depto&#39;</span><span class="p">)[[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
 <p>En pandas, una de las operaciones mas importante es <cite>groupby</cite>. Lo que hace es, tomando una(s) columna(s) de referencia, reunir a todas las observaciones que coinciden en dicha columna y devuelven un &#8216;objeto agrupado&#8217;. A este objeto le podemos poner una operacion, por ejemplo suma, promedio, tomar muestra, etc. Por ejemplo podriamos tener informacion de poblacion a nivel de departamentos, y con <cite>pandas.groupby()</cite> agregarla a nivel de provincias y mostrar el total de poblacion por provincia.</p>
 <p>El metodo <cite>geopandas.dissolve</cite> hace esencialmente lo mismo pero combinando las formas geometricas con union. Es decir que siguiendo el ejemplo, junto con la suma de poblacion nos va a crear el agregado de departamentos en una provincia. Para todas las provincias.</p>
 <p>Las formas geometricas de shapely tienen varios atributos que las describen. Por ejemplo, podemos calcular el centroide:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">CABA_centroid</span> <span class="o">=</span> <span class="n">CABA_polygon</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>El centroide es un objeto punto de shapely. Podemos usarlo para calcular la distancia de los partidos de Buenos Aires al centroide de la capital. Anotemoslo como una columna del GeoDataFrame &#8216;partidos&#8217;</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">partidos</span><span class="p">[</span><span class="s1">&#39;distancia_CABA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CABA_centroid</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">partidos</span><span class="o">.</span><span class="n">geometry</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>Podemos extraer los codigos de los partidos mas cercanos a la Ciudad y usarlos para filtrar en el dataset de radios censales de Provincia de Buenos Aires aquellos que pertenecen a este autodefinido &#8216;GBA&#8217;. Uso 36 partidos porque si, la idea es nomas dar ejemplos de lo que se puede hacer. Tambien podriamos haber metido directamente la lista de partidos del conurbano, las alternativas quedan a gusto de cada uno!</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">partidos_GBA</span> <span class="o">=</span> <span class="n">partidos</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;distancia_CABA&#39;</span><span class="p">)[:</span><span class="mi">36</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+
+<span class="gp">In [1]: </span><span class="n">GBA_datos</span> <span class="o">=</span> <span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">depto</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">partidos_GBA</span><span class="p">)]</span>
+
+<span class="gp">In [1]: </span><span class="n">AMBA_datos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">CABA_datos</span><span class="p">,</span> <span class="n">GBA_datos</span><span class="p">])</span>
+</pre></div>
+</div>
 <p>usamos aca el metodo <cite>pd.concat</cite>, que nos pone una tabla a continuacion de la otra. En un paso anterior escogimos las mismas columnas en ambos DataFrames, ademas de asignarles nombres identicos a sus columnas. De esta forma el DataFrame &#8216;AMBA_datos&#8217; que generamos queda uniforme como debe ser.</p>
 <div class="section" id="ejemplo-cantidad-de-chicos-de-13-a-18-por-radio-censal">
 <h2>Ejemplo: cantidad de chicos de 13 a 18 por radio censal<a class="headerlink" href="#ejemplo-cantidad-de-chicos-de-13-a-18-por-radio-censal" title="Permalink to this headline">¶</a></h2>
@@ -233,12 +253,62 @@ Veamos algunos ejemplos:</p>
 <span class="gp">In [1]: </span><span class="n">persona</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">persona</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>Sumar columnas</strong></p>
 <p>La informacion de las edades de la gente por radio censal puede ser un nivel de desagregacion excesivo para algunas aplicaciones. Aca sin embargo, vamos a aprovechar esta informacion, y ya que estamos hablando de escuelas secundarias, vamos a calcular cuantos jovenes de entre 13 y 18 anios hay por radio censal. Del dataset &#8216;persona&#8217; nos vamos a quedar entonces solo con dos columnas: &#8216;link&#8217; y &#8216;persona_13_18&#8217;.</p>
-<p>Combinamos la informacion de cantidad de chicos con la tabla que tiene los poligonos de cada radio censal. Para eso es necesario tener una columna compartida que identifique los radios en ambas tablas. En este caso, la columna &#8216;link&#8217;. Creemos un mapa para poder echar un vistazo.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># Sumar personas en edades 13 a 18.</span>
+<span class="gp">In [1]: </span><span class="n">persona</span><span class="p">[</span><span class="s1">&#39;persona_13_18&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">persona</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">14</span><span class="p">:</span><span class="mi">19</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Unir tablas</strong></p>
+<p>Unir (o combinar) tablas es una accion muy util y frecuente. Se trata de combinar data de diferentes tablas basandose en columnas en comun, y se puede hacer facilmente en Pandas/Geopandas usando la funcion <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html">.merge()</a>.</p>
+<ul class="simple">
+<li>continuemos con nuestra tarea de geolocalizacion y unamos los DataFrames <code class="docutils literal"><span class="pre">AMBA_datos</span></code> y <code class="docutils literal"><span class="pre">persona</span></code> segun la columna en comun <code class="docutils literal"><span class="pre">link</span></code> (que justamente para esto la hicimos). El parametro <code class="docutils literal"><span class="pre">on</span></code> se usa para determinar la columna en comun. Si tuvieran distintos nombres en cada columns, se podrian indicar con los parametros <code class="docutils literal"><span class="pre">left_on</span></code> and <code class="docutils literal"><span class="pre">right_on</span></code>.</li>
+</ul>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># Combinar con la tabla AMBA_datos, que contiene los poligonos de los radios censales.</span>
+<span class="gp">In [1]: </span><span class="n">AMBA_datos_persona_13_18</span> <span class="o">=</span> <span class="n">AMBA_datos</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">persona</span><span class="p">[[</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;persona_13_18&#39;</span><span class="p">]],</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;link&#39;</span><span class="p">)</span>
+
+<span class="go"># Calcular area en km2</span>
+<span class="gp">In [1]: </span><span class="n">AMBA_datos_persona_13_18</span><span class="p">[</span><span class="s2">&quot;area_km2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">6</span> <span class="o">*</span> <span class="n">AMBA_datos_persona_13_18</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">area</span>
+
+<span class="go"># Con cantidad de chicos y area, calcular densidad</span>
+<span class="gp">In [1]: </span><span class="n">AMBA_datos_persona_13_18</span><span class="p">[</span><span class="s1">&#39;densidad&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">AMBA_datos_persona_13_18</span><span class="p">[</span><span class="s1">&#39;persona_13_18&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">AMBA_datos_persona_13_18</span><span class="p">[</span><span class="s2">&quot;area_km2&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Como resultado tenemos un nuevo DataFrame que llamamos <code class="docutils literal"><span class="pre">AMBA_datos_persona_13_18</span></code>, que tiene las columnas de los DataFrames originales, ademas de una nueva columna para <code class="docutils literal"><span class="pre">geometry</span></code>. Creemos un mapa para poder echar un vistazo.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="gp">In [1]: </span><span class="n">AMBA_datos_persona_13_18</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;densidad&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">edgecolors</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">2300</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="go"># Graficamos tambien los partidos (sin pintar y con borde blanco) como referencia visual.</span>
+<span class="gp">In [1]: </span><span class="n">partidos</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+<span class="gp">In [1]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4140000</span><span class="p">,</span> <span class="mi">4220000</span><span class="p">)</span>
+
+<span class="gp">In [1]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">6100000</span><span class="p">,</span> <span class="mi">6180000</span><span class="p">)</span>
+
+<span class="gp">In [1]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../../_images/densidad_radio_censal.png" src="../../_images/densidad_radio_censal.png" />
 </div>
 <div class="section" id="ejemplo-zonas-en-las-que-cada-escuela-es-la-mas-cercana">
 <h2>Ejemplo: zonas en las que cada escuela es la mas cercana<a class="headerlink" href="#ejemplo-zonas-en-las-que-cada-escuela-es-la-mas-cercana" title="Permalink to this headline">¶</a></h2>
 <p>Ahora, carguemos un dataset con ubicaciones de edificios. Para este ejemplo vamos a usar el dataset de escuelas secundarias del AMBA geolocalizadas que obtuvimos en el tutorial anterior.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="go"># Cargar csv, y tirar observaciones sin localizar.</span>
+<span class="gp">In [1]: </span><span class="n">edificios</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datos/esc_sec_AMBA_geoloc_full.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="go"># Pasar la data de latitud y longitud a objetos shapely.Point</span>
+<span class="gp">In [1]: </span><span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">edificios</span><span class="o">.</span><span class="n">lng</span><span class="p">,</span> <span class="n">edificios</span><span class="o">.</span><span class="n">lat</span><span class="p">)]</span>
+
+<span class="gp">In [1]: </span><span class="n">edificios</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;lng&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="go"># Lo reescribimos como GeoDataFrame, indicando el sistema de coordenadas.</span>
+<span class="gp">In [1]: </span><span class="n">edificios</span> <span class="o">=</span> <span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">edificios</span><span class="p">,</span> <span class="n">crs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;init&#39;</span><span class="p">:</span> <span class="s1">u&#39;epsg:4326&#39;</span><span class="p">},</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">)</span>
+
+<span class="go"># Pero pasamos al sistema de coordenadas (CRS) de &#39;partidos&#39;. Todos los otros datos ya estan en este CRS.</span>
+<span class="gp">In [1]: </span><span class="n">edificios</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">edificios</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">crs</span><span class="o">=</span><span class="n">partidos</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Tenemos la data de los edificios geolocalizados como un objeto GeoDataFrame. Nomas para mostrar algunas de las posibilidades que ofrece este tipo de data, vamos a calcular para esta coleccion de puntos, lo que son los poligonos de Voronoi. Ojo, no es nada complejo, simplemente cada escuela tendra a su alrededor un poligono, y este poligono contiene todos los puntos para los cuales la escuela es la mas cercana. Es como demarcar las areas para las cuales cada escuela es la mas cercana.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">Voronoi</span><span class="p">,</span> <span class="n">voronoi_plot_2d</span>
 
@@ -258,10 +328,9 @@ Veamos algunos ejemplos:</p>
 <span class="go"># Creamos un dataframe con la informacion de los poligonos</span>
 </pre></div>
 </div>
+<img alt="../../_images/voronoi_areas.png" src="../../_images/voronoi_areas.png" />
 <p>Listo, tenemos un GeoDataframe con poligonos que marcan la zona en la cual cada escuela es la mas cercana. En la proxima seccion vamos a darle un aplicacion combinando informacion sobre la poblacion por radio censal. El objetivo de este pequenio ejemplo es mostrar una operacion que podemos hacer que relaciona puntos con una vecindad correspondiente. Recordemos que los puntos de este ejemplo pueden ser reemplazados por cualquier otra informacion de ubicaciones dependiendo de la aplicacion que le queramos dar. Lo importante de estos ejemplos no son los resultados particulares que tengamos aca, sino que cada uno puede adaptar el codigo de acuerdo a lo que le interese en el momento.</p>
-</div>
-<div class="section" id="guardamos-las-tablas-utiles">
-<h2>Guardamos las tablas utiles<a class="headerlink" href="#guardamos-las-tablas-utiles" title="Permalink to this headline">¶</a></h2>
+<p><strong>Guardamos las tablas utiles</strong></p>
 <p>Por ultimo vamos a guardar la informacion util, de forma de poder cargarla directamente para usar en los ejemplos siguientes.</p>
 </div>
 </div>

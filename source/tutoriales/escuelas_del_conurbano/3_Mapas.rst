@@ -1,5 +1,5 @@
-Haciendo mapas con shapely y geopandas
-======================================
+Mapas con geopandas y shapely
+=============================
 
 A continuacion, vamos a aprovechar la funcionalidad de geopandas y los poligonos de shapely para construir mapas. Primero, vamos a cargar algunas tablas con informacion de poblacion y poligonos de distritos, junto con sus perimetros en formato de poligono shapely.
 
@@ -31,6 +31,7 @@ Bueno, ya tenemos dos tablas con los radios censales de la Ciudad y de Buenos Ai
 Veamos algunos ejemplos:
 
 .. ipython:: python
+
     CABA_polygon = CABA_datos.dissolve(by = 'prov')['geometry']
     partidos = Buenos_Aires_datos.dissolve(by = 'depto')[['geometry']]
 
@@ -42,16 +43,19 @@ El metodo `geopandas.dissolve` hace esencialmente lo mismo pero combinando las f
 Las formas geometricas de shapely tienen varios atributos que las describen. Por ejemplo, podemos calcular el centroide:
 
 .. ipython:: python
+
     CABA_centroid = CABA_polygon.centroid.iloc[0]
     
 El centroide es un objeto punto de shapely. Podemos usarlo para calcular la distancia de los partidos de Buenos Aires al centroide de la capital. Anotemoslo como una columna del GeoDataFrame 'partidos'
 
 .. ipython:: python
+
     partidos['distancia_CABA'] = [CABA_centroid.distance(m) for m in partidos.geometry]
     
 Podemos extraer los codigos de los partidos mas cercanos a la Ciudad y usarlos para filtrar en el dataset de radios censales de Provincia de Buenos Aires aquellos que pertenecen a este autodefinido 'GBA'. Uso 36 partidos porque si, la idea es nomas dar ejemplos de lo que se puede hacer. Tambien podriamos haber metido directamente la lista de partidos del conurbano, las alternativas quedan a gusto de cada uno! 
 
 .. ipython:: python
+
     partidos_GBA = partidos.sort_values(by = 'distancia_CABA')[:36].index
     GBA_datos = Buenos_Aires_datos.loc[Buenos_Aires_datos.depto.isin(partidos_GBA)]
     AMBA_datos = pd.concat([CABA_datos, GBA_datos])
@@ -70,11 +74,22 @@ Carguemos data de poblacion por radio censal. Basicamente esto nos permite conoc
     # Aca tenemos que prestar atencion y completar con un cero por delante, en caso de que haya sido removido automaticamente en algun paso intermedio.
     persona['link'] = persona['link'].astype(str).str.zfill(9)
 
+**Sumar columnas**
+
 La informacion de las edades de la gente por radio censal puede ser un nivel de desagregacion excesivo para algunas aplicaciones. Aca sin embargo, vamos a aprovechar esta informacion, y ya que estamos hablando de escuelas secundarias, vamos a calcular cuantos jovenes de entre 13 y 18 anios hay por radio censal. Del dataset 'persona' nos vamos a quedar entonces solo con dos columnas: 'link' y 'persona_13_18'.
 
 .. ipython:: python
+
     # Sumar personas en edades 13 a 18.
     persona['persona_13_18'] = persona.iloc[:, 14:19].sum(axis = 1)
+
+**Unir tablas**
+
+Unir (o combinar) tablas es una accion muy util y frecuente. Se trata de combinar data de diferentes tablas basandose en columnas en comun, y se puede hacer facilmente en Pandas/Geopandas usando la funcion `.merge() <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html>`__.
+
+-  continuemos con nuestra tarea de geolocalizacion y unamos los DataFrames ``AMBA_datos`` y ``persona`` segun la columna en comun ``link`` (que justamente para esto la hicimos). El parametro ``on`` se usa para determinar la columna en comun. Si tuvieran distintos nombres en cada columns, se podrian indicar con los parametros ``left_on`` and ``right_on``.
+
+.. ipython:: python
 
     # Combinar con la tabla AMBA_datos, que contiene los poligonos de los radios censales. 
     AMBA_datos_persona_13_18 = AMBA_datos.merge(persona[['link', 'persona_13_18']], on = 'link')
@@ -83,9 +98,10 @@ La informacion de las edades de la gente por radio censal puede ser un nivel de 
     # Con cantidad de chicos y area, calcular densidad
     AMBA_datos_persona_13_18['densidad'] = AMBA_datos_persona_13_18['persona_13_18'] / AMBA_datos_persona_13_18["area_km2"]
 
-Combinamos la informacion de cantidad de chicos con la tabla que tiene los poligonos de cada radio censal. Para eso es necesario tener una columna compartida que identifique los radios en ambas tablas. En este caso, la columna 'link'. Creemos un mapa para poder echar un vistazo.
+Como resultado tenemos un nuevo DataFrame que llamamos ``AMBA_datos_persona_13_18``, que tiene las columnas de los DataFrames originales, ademas de una nueva columna para ``geometry``. Creemos un mapa para poder echar un vistazo.
 
 .. ipython:: python
+
     f, ax = plt.subplots(1, figsize=(10, 10))
     AMBA_datos_persona_13_18.plot(axes = ax, column = 'densidad', cmap='gray', edgecolors = 'None', vmin = 0, vmax = 2300, alpha = 0.5)
     # Graficamos tambien los partidos (sin pintar y con borde blanco) como referencia visual.
@@ -94,12 +110,15 @@ Combinamos la informacion de cantidad de chicos con la tabla que tiene los polig
     plt.ylim(6100000, 6180000)
     plt.show()
     
+.. image:: ../../img/densidad_radio_censal.png
+
 Ejemplo: zonas en las que cada escuela es la mas cercana
 --------------------------------------------------------
 
 Ahora, carguemos un dataset con ubicaciones de edificios. Para este ejemplo vamos a usar el dataset de escuelas secundarias del AMBA geolocalizadas que obtuvimos en el tutorial anterior. 
 
 .. ipython:: python
+
     # Cargar csv, y tirar observaciones sin localizar.
     edificios = pd.read_csv('datos/esc_sec_AMBA_geoloc_full.csv').dropna()
 
@@ -158,10 +177,12 @@ Tenemos la data de los edificios geolocalizados como un objeto GeoDataFrame. Nom
     # Creamos un dataframe con la informacion de los poligonos
     voronoi = gpd.GeoDataFrame(p, columns = ['geometry'])
 
+.. image:: ../../img/voronoi_areas.png
+
 Listo, tenemos un GeoDataframe con poligonos que marcan la zona en la cual cada escuela es la mas cercana. En la proxima seccion vamos a darle un aplicacion combinando informacion sobre la poblacion por radio censal. El objetivo de este pequenio ejemplo es mostrar una operacion que podemos hacer que relaciona puntos con una vecindad correspondiente. Recordemos que los puntos de este ejemplo pueden ser reemplazados por cualquier otra informacion de ubicaciones dependiendo de la aplicacion que le queramos dar. Lo importante de estos ejemplos no son los resultados particulares que tengamos aca, sino que cada uno puede adaptar el codigo de acuerdo a lo que le interese en el momento.
 
-Guardamos las tablas utiles
----------------------------
+**Guardamos las tablas utiles**
+
 Por ultimo vamos a guardar la informacion util, de forma de poder cargarla directamente para usar en los ejemplos siguientes.
 
 .. ipython:: python

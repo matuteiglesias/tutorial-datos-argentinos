@@ -48,7 +48,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Coleccion de Tutoriales con Datos Argentinos  documentation" href="../../index.html"/>
         <link rel="next" title="Geolocalizacion" href="2_Geolocalizacion.html"/>
-        <link rel="prev" title="Introduccion" href="../../info/Introduccion.html"/> 
+        <link rel="prev" title="Instalar Python + GIS" href="../../info/Instalacion.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -104,10 +104,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Information General</span></p>
+              <p class="caption"><span class="caption-text">Informacion General</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../info/Instalacion.html">Instalar Python + GIS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info/Introduccion.html">Introduccion</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorial 1: Escuelas del Conurbano</span></p>
 <ul class="current">
@@ -117,8 +116,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="2_Geolocalizacion.html">Geolocalizacion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_Mapas.html">Haciendo mapas con shapely y geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Mapas.html">Mapas con geopandas y shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_Operaciones_con_poligonos.html">Mas operaciones con poligonos</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Links que valen la pena</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/Links.html">Links valiosos</a></li>
 </ul>
 
             
@@ -188,9 +191,10 @@
 <h1>Intro: Jupyter notebooks, Pandas DataFrames, y GIS<a class="headerlink" href="#intro-jupyter-notebooks-pandas-dataframes-y-gis" title="Permalink to this headline">¶</a></h1>
 <p>Jupyter Notebook es una poderosa herramienta que permite a los usuarios de Python crear y compartir documentos que contengan código en vivo, visualizaciones, textos explicativos y ecuaciones. El término &#8220;notebook&#8221; se refiere a que la herramienta Jupyter te permite escribir fragmentos de código ejecutable autónomo (las &#8220;celdas&#8221;), anotar cada procedimiento e incluso visualizar los datos con los que está trabajando en cualquier paso del camino.</p>
 <p><strong>¿Por qué debería usar un Jupyter Notebook?</strong></p>
-<p>Jupyter Notebook ha ganado enorme popularidad en la comunidad de Python data science en los últimos años por una variedad de razones. Segun el usuario de GIS Alberto Nieto, Jupyter Notebook es extremadamente útil porque:</p>
+<p>Jupyter Notebook ha ganado enorme popularidad en la comunidad de Python data science en los últimos años por una variedad de razones. Segun el usuario de GIS <a class="reference external" href="https://blogs.esri.com/esri/arcgis/author/Alberto-149/">Alberto Nieto</a>, Jupyter Notebook es extremadamente útil porque:</p>
 <p><strong>Permite probar lineas &#8216;borrador&#8217; de codigo</strong></p>
 <p>Los Jupyter notebooks son extremadamente útiles cuando no hay un proceso final definido y aún estamos en la fase de creación de prototipos (o sea probando que cosas podrian funcionar, o no). Esto se debe principalmente a que el código se escribe en celdas independientes, que pueden ejecutarse independientemente del resto del Ecódigo. Esto nos permite probar rápidamente un paso específico sin volver a ejecutar el código desde el comienzo cada vez.</p>
+<img alt="../../_images/jupyter_screenshot.png" src="../../_images/jupyter_screenshot.png" />
 <p><strong>La visualización de Dataframes Pandas</strong></p>
 <p><strong>Pandas</strong> (Python Data Analysis Library) proporciona estructuras de datos (tablas, etc) de alto rendimiento y fáciles de usar que te permiten trabajar con gran cantidad de datos extremadamente rápido. El objeto de datos principal es un Dataframe, que es esencialmente una tabla en memoria que permite operaciones muy potentes, como vamos a ver.</p>
 <p>Jupyter Notebook te permite visualizar estas tablas en cualquier punto de su computadora portátil. Esto es extremadamente útil porque podes ver el estado de tus datos (y el resultado de cada accion del código sobre los datos) al ejecutar cada paso.</p>
@@ -210,25 +214,25 @@
 <span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go"></span>
 <span class="go">           radio  edad_0  edad_1  edad_2  edad_3  edad_4  edad_5  edad_6  \</span>
-<span class="go">16695   63574812       7       2       2       5       1       6       3   </span>
-<span class="go">39035  500910106      14      12      11       5       9      12      11   </span>
-<span class="go">13060   60492509      24      21      24      19      13      18      23   </span>
-<span class="go">20853   66440308       5       1       2       2       4       3       1   </span>
-<span class="go">47886  820842619       2       3       2       3       1       1       3   </span>
+<span class="go">46863  820630703       5       2       4       6       3      11       6   </span>
+<span class="go">32379  300080709       2       0       0       0       2       1       1   </span>
+<span class="go">4347    60352707      48      36      45      38      32      35      35   </span>
+<span class="go">47969  820843008      10      12      14      11      18      15      11   </span>
+<span class="go">42102  620420104       0       3       2       0       0       0       1   </span>
 
 <span class="go">       edad_7  edad_8  ...    edad_102  edad_103  edad_104  edad_105  \</span>
-<span class="go">16695       5       3  ...           0         0         0         0   </span>
-<span class="go">39035       9       8  ...           0         0         0         0   </span>
-<span class="go">13060      18      25  ...           0         0         0         0   </span>
-<span class="go">20853       3       1  ...           0         0         0         0   </span>
-<span class="go">47886       2       3  ...           0         0         0         0   </span>
+<span class="go">46863       8       7  ...           0         0         0         0   </span>
+<span class="go">32379       1       2  ...           0         0         0         0   </span>
+<span class="go">4347       36      41  ...           0         0         0         0   </span>
+<span class="go">47969      14      17  ...           0         0         0         0   </span>
+<span class="go">42102       2       0  ...           0         0         0         0   </span>
 
 <span class="go">       edad_106  edad_107  edad_108  edad_109  edad_110  TOTAL  </span>
-<span class="go">16695         0         0         0         0         0    435  </span>
-<span class="go">39035         0         0         0         0         0    697  </span>
-<span class="go">13060         0         0         0         0         0   1388  </span>
-<span class="go">20853         0         0         0         0         0    123  </span>
-<span class="go">47886         0         0         0         0         0    324  </span>
+<span class="go">46863         0         0         0         0         0    581  </span>
+<span class="go">32379         0         0         0         0         0     66  </span>
+<span class="go">4347          0         0         0         0         0   1557  </span>
+<span class="go">47969         0         0         0         0         0    948  </span>
+<span class="go">42102         0         0         0         0         0     69  </span>
 
 <span class="go">[5 rows x 113 columns]</span>
 </pre></div>
@@ -259,30 +263,30 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="go"># Muestra de la data</span>
 <span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
-<span class="go">          link codpcia coddpto codloc provincia  departamen  \</span>
-<span class="go">3252  82133110      82     133    110  Santa Fe        Vera   </span>
-<span class="go">1765  38014100      38     014    100     Jujuy   El Carmen   </span>
-<span class="go">2686  70021010      70     021    010  San Juan  Calingasta   </span>
+<span class="go">          link codpcia coddpto codloc provincia       departamen  \</span>
+<span class="go">3097  82077080      82     077    080  Santa Fe       9 de Julio   </span>
+<span class="go">2583  66042007      66     042    007     Salta         Chicoana   </span>
+<span class="go">1429  22154040      22     154    040     Chaco  Sargento Cabral   </span>
 
-<span class="go">                    localidad func_loc tiploc tip2loc  \</span>
-<span class="go">3252                Margarita        0      1       0   </span>
-<span class="go">1765             Puesto Viejo        0      1       0   </span>
-<span class="go">2686  Barreal  - Villa Pituil        0      1       0   </span>
+<span class="go">                  localidad func_loc tiploc tip2loc  \</span>
+<span class="go">3097                Tostado        3      1       0   </span>
+<span class="go">2583  Barrio Santa Teresita        0      1       0   </span>
+<span class="go">1429       Ingeniero Barbet        0      1       0   </span>
 
-<span class="go">                 ...               longitud        xgk        ygk  varones  \</span>
-<span class="go">3252             ...               60 15 09  6716068.0  5475565.0   1684.0   </span>
-<span class="go">1765             ...               64 57 59  3604777.0  7293071.0    690.0   </span>
-<span class="go">2686             ...               69 28 33  2454851.0  6499257.0   1735.0   </span>
+<span class="go">                 ...              longitud        xgk        ygk  varones  \</span>
+<span class="go">3097             ...              61 46 19  6765406.0  5327716.0   7014.0   </span>
+<span class="go">2583             ...                        3543129.0  7507231.0    353.0   </span>
+<span class="go">1429             ...              59 28 55  5551422.0  7014088.0    132.0   </span>
 
 <span class="go">      mujeres  personas  hogares  viv_part_h  viv_part  \</span>
-<span class="go">3252   1850.0    3534.0   1112.0      1085.0    1271.0   </span>
-<span class="go">1765    682.0    1372.0    332.0       258.0     315.0   </span>
-<span class="go">2686   1728.0    3463.0    888.0       845.0    1297.0   </span>
+<span class="go">3097   7568.0   14582.0   4305.0      4129.0    4846.0   </span>
+<span class="go">2583    368.0     721.0    166.0       165.0     195.0   </span>
+<span class="go">1429    145.0     277.0     70.0        39.0      51.0   </span>
 
-<span class="go">                         geometry  </span>
-<span class="go">3252   POINT (4056746.25 6702234)  </span>
-<span class="go">1765      POINT (3604713 7292566)  </span>
-<span class="go">2686  POINT (3170113.5 6493893.5)  </span>
+<span class="go">                        geometry  </span>
+<span class="go">3097  POINT (3911236.75 6759289)  </span>
+<span class="go">2583  POINT (3543128.75 7231742)  </span>
+<span class="go">1429     POINT (4147700 6997206)  </span>
 
 <span class="go">[3 rows x 21 columns]</span>
 </pre></div>
@@ -327,28 +331,27 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">       toponimo_i       link  varon  mujer  totalpobl  hogares  viviendasp  \</span>
-<span class="go">16564      306708  064412206  277.0  303.0      580.0    233.0       308.0   </span>
-<span class="go">8825       304047  064120703  770.0  779.0     1549.0    412.0       399.0   </span>
-<span class="go">16760      284550  060210401   17.0   16.0       33.0     12.0        35.0   </span>
-<span class="go">14336      285764  063921101   16.0   10.0       26.0      9.0        15.0   </span>
-<span class="go">12638      313613  068052310  808.0  746.0     1554.0    392.0       339.0   </span>
+<span class="go">6092       301438  062700714  586.0  590.0     1176.0    331.0       348.0   </span>
+<span class="go">18075      308445  067000210  237.0  263.0      500.0    216.0       264.0   </span>
+<span class="go">10776      299948  061190403  190.0  172.0      362.0    123.0       221.0   </span>
+<span class="go">5605       308362  065150802  523.0  513.0     1036.0    312.0       310.0   </span>
+<span class="go">5747       298752  060353504  384.0  416.0      800.0    246.0       263.0   </span>
 
 <span class="go">       viv_part_h                                           geometry  </span>
-<span class="go">16564       230.0  POLYGON ((4233304.645573239 6106775.609129586,...  </span>
-<span class="go">8825        363.0  POLYGON ((4164021.374573144 6157479.898753871,...  </span>
-<span class="go">16760        12.0  POLYGON ((4013226.089626045 6118391.976109259,...  </span>
-<span class="go">14336         9.0  POLYGON ((3799902.277629728 6122657.721317669,...  </span>
-<span class="go">12638       320.0  POLYGON ((4172086.251985384 6166280.297342194,...  </span>
+<span class="go">6092        319.0  POLYGON ((4180746.823549158 6113916.398708752,...  </span>
+<span class="go">18075       213.0  POLYGON ((3817003.645997512 5831928.423781276,...  </span>
+<span class="go">10776       119.0  POLYGON ((4215898.328590137 6091259.880455916,...  </span>
+<span class="go">5605        280.0  POLYGON ((4174755.42971666 6158035.954470803, ...  </span>
+<span class="go">5747        226.0  POLYGON ((4197180.245954935 6138202.139991279,...  </span>
 </pre></div>
 </div>
 <p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b96e78a3310&gt;</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b7718dc5450&gt;</span>
 </pre></div>
 </div>
 <p>Que nos grafica el area de la fila 10 con un dibujito.</p>
-<img alt="tutoriales/escuelas_del_conurbano/img/image.png" src="tutoriales/escuelas_del_conurbano/img/image.png" />
-<p>TODO</p>
+<a class="reference internal image-reference" href="../../_images/shapely_geometry.png"><img alt="../../_images/shapely_geometry.png" src="../../_images/shapely_geometry.png" style="width: 226.5px; height: 197.5px;" /></a>
 <p>Los GeoDataFrames permiten usar toda la funcionalidad de los DataFrames de pandas. Por ejemplo, podemos crear nuevas columnas con codigos de provincia y departamento (partido/comuna) y otra columna que se va a llamar &#8216;dpto_link&#8217; que es una concatenacion del codigo de provincia y departamento, de forma de tener un codigo de departamento util a nivel nacional.</p>
 <p>Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloreamos segun la provincia, para ilustrar una de las posibilidades.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="go">#import the standard plotting module</span>
@@ -411,8 +414,7 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="c1"># Remove empty white space around the plot</span>
 </pre></div>
 </div>
-<img alt="tutoriales/escuelas_del_conurbano/img/image.png" src="tutoriales/escuelas_del_conurbano/img/image.png" />
-<p>TODO</p>
+<img alt="../../_images/localidades_provincia.png" src="../../_images/localidades_provincia.png" />
 <p>Los ejemplos mostrados aqui estan en el notebook 1_Geopandas.ipynb</p>
 </div>
 </div>
@@ -430,7 +432,7 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
         <a href="2_Geolocalizacion.html" class="btn btn-neutral float-right" title="Geolocalizacion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../../info/Introduccion.html" class="btn btn-neutral" title="Introduccion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../info/Instalacion.html" class="btn btn-neutral" title="Instalar Python + GIS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

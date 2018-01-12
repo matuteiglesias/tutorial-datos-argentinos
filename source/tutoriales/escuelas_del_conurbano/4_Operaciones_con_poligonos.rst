@@ -3,7 +3,9 @@ Mas operaciones con poligonos
 
 En los tutoriales pasados vimos algunas de las operaciones basicas que se pueden hacer con objetos shapely.Polygon y shapely.Point en un objeto geopandas.GeoDataFrame. Ahora, vamos a usar algunas de estas operaciones para calcular algo un poco mas complejo. 
 
-Recordemos que tenemos una tabla con las escuelas del area metropolitana de Buenos Aires y su ubicacion. Ademas, tenemos informacion de donde vive la gente de cada edad, al nivel de radios censales, que son distritos censales de pocos cientos de personas. En particular podemos contar cuantos chicos de 13 a 18 anios viven en cada radio censal.
+Recordemos que tenemos una tabla con las escuelas del area metropolitana de Buenos Aires y su ubicacion. Ademas, tenemos informacion de donde vive la gente de cada edad, al nivel de radios censales, que son distritos censales de pocos cientos de personas. En particular podemos contar cuantos chicos de 13 a 18 anios viven en cada radio censal. Ademas podemos comparar la ubicacion de las escuelas con la distribucion de los chicos.
+
+.. image:: ../../img/chicos_por_escuela_banner.png
 
 Les propongo considerar el siguiente modelo. Asumamos que:
 
@@ -18,6 +20,7 @@ Volviendo al modelo, usemoslo para contar cuantos chicos se encuentran en la zon
 Parece complicado, pero esta operacion se puede hacer sin muchas vueltas aprovechando las funcionalidades de los GeoDataFrames de geopandas y los poligonos de shapely. Veamos como...
 
 .. ipython:: python
+
     import geopandas as gpd
     # herramienta que vamos a usar
     from geopandas.tools import sjoin
@@ -29,6 +32,7 @@ Parece complicado, pero esta operacion se puede hacer sin muchas vueltas aprovec
 y ahora...
 
 .. ipython:: python
+
     # Paso clave, calcula las intersecciones de poligonos en ambos datasets, todos contra todos.
     # Con el argumento op se puede elegir la operacion a calcular, por ejemplo union, interseccion, diferencia...
     intersections= gpd.sjoin(voronoi, AMBA_datos_persona_13_18, how="right", op='intersects').reset_index()
@@ -61,6 +65,7 @@ Vamos a calcular ahora, para todas las intersecciones la fraccion de area del re
 Ahora agregamos en cada vecindad de escuela la cantidad total de gente, y de paso agregamos el area para poder detectar si hay inconsistencias.
 
 .. ipython:: python
+
     # Columnas que provienen de df_intersect
     inters_cols = [col for col in df_intersect.columns if 'intersect_' in col]
     
@@ -80,6 +85,7 @@ Ahora agregamos en cada vecindad de escuela la cantidad total de gente, y de pas
 Por ultimo vamos a ver que tal se ve lo que acabamos de calcular. Grafiquemos la cantidad de chicos que le corresponden a cada escuela, donde en verde ubicamos los valores mas bajos y en rojo los mas altos.
 
 .. ipython:: python
+
     # Importamos la libreria standard para graficos.
     import matplotlib.pyplot as plt
     %matplotlib inline
@@ -102,3 +108,5 @@ Por ultimo vamos a ver que tal se ve lo que acabamos de calcular. Grafiquemos la
     plt.xlim(4140000, 4220000)
     plt.ylim(6100000, 6180000)
     plt.show()
+
+.. image:: ../../img/chicos_por_escuela.png
