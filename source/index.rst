@@ -26,6 +26,8 @@ Podes agregar contenido (tutoriales, links de interes, u otro material) a traves
 
 Consulta tus dudas, actualmente el sitio es mantenido por: Matias Nehuen Iglesias (matuteiglesias@gmail.com)
 
+**Editar esta pagina es facil** modificando `el archivo index.rst en el proyecto de GitHub <https://github.com/matuteiglesias/tutorial-datos-argentinos/edit/master/source/index.rst>`_.
+
 
 Contenidos
 ----------
@@ -57,7 +59,7 @@ Links de valor
 `Como profundizar en Data Science <https://www.facebook.com/notes/data-science-argentina/c%C3%B3mo-profundizar-en-data-science/1257387361074142/>`_
 Este documento recopila info util para tod@s los que quieran aprender. Info de carreras del ambito publico y privadas, libros, cursos y mas.
 
-**Sobre datos**
+**Proyectos con datos**
 
 `Paquete apertura de datos, Ministerio de Modernizacion <http://paquete-apertura-datos.readthedocs.io/es/stable/index.html>`_.
 
@@ -65,9 +67,18 @@ Este documento recopila info util para tod@s los que quieran aprender. Info de c
 
 `Unidades Geoestadísticas - Cartografía y códigos geográficos del Sistema Estadístico Nacional <https://www.indec.gov.ar/codgeo.asp>`_.
 
+`Proyecto datos comunes <https://drive.google.com/drive/folders/0B0z-0ZRNqBnwQ3pVNWM2clF4RjA>`_
 
-**Investigacion**
+**Debate por las politicas**
 
 `Ayub S., Dequino D. (2011). La transparencia en los subsidios al sector privado <https://www.cippec.org/publicacion/la-transparencia-en-los-subsidios-al-sector-privado-hallazgos-y-recomendaciones-sobre-los-casos-de-transporte-gas-y-alimentos-de-consumo-masivo/>`_
 
 El caso de la informacion sobre los subsidios en el ONCCA da un ejemplo de que se puede y debe adaptar los metodos de manejo de la informacion en el estado, por la transparencia, pero ademas por la eficiencia. Es decir lograr que el Estado cumpla con objetivos que se propone.
+
+**International initiatives**
+
+- Una referencia a los datos abiertos en Finlandia y en especial Helsinki que son lideres a nivel internacional en el tema (y tambien compañeros).
+
+`Open data from the Helsinki Metropolitan Area for you to use freely <http://www.hri.fi/en/>`_
+
+`Open data and interoerability tools <https://www.avoindata.fi/en>`_
