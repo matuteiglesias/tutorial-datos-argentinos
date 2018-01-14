@@ -81,4 +81,4 @@ El caso de la informacion sobre los subsidios en el ONCCA da un ejemplo de que s
 
 `Open data from the Helsinki Metropolitan Area for you to use freely <http://www.hri.fi/en/>`_
 
-`Open data and interoerability tools <https://www.avoindata.fi/en>`_
+`Open data and interoperability tools <https://www.avoindata.fi/en>`_
