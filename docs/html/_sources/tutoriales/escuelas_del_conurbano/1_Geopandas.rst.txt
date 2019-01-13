@@ -127,7 +127,6 @@ Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloream
     
     #import the standard plotting module
     import matplotlib.pyplot as plt
-    %matplotlib inline
 
     # create subplots
     f, ax = plt.subplots(1, figsize=(3, 5))

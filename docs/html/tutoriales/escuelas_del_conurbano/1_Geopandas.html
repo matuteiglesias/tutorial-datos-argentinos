@@ -210,11 +210,11 @@
 <span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go"></span>
 <span class="go">           radio  edad_0  edad_1  ...    edad_109  edad_110  TOTAL</span>
-<span class="go">29742  181330212       4       9  ...           0         0    387</span>
-<span class="go">6744    64272404      18      18  ...           0         0   1053</span>
-<span class="go">9981    65602402       9       5  ...           0         0    489</span>
-<span class="go">22932   68680809       8       3  ...           0         0    535</span>
-<span class="go">3518    20151902      13      11  ...           0         0    794</span>
+<span class="go">39047  500910205      28      25  ...           0         0    997</span>
+<span class="go">48986  821050313       8       3  ...           0         0    633</span>
+<span class="go">44408  700700302      19      25  ...           0         0    973</span>
+<span class="go">42907  660280706      21      18  ...           0         0   1012</span>
+<span class="go">585     20030703       6      13  ...           0         0    967</span>
 
 <span class="go">[5 rows x 113 columns]</span>
 </pre></div>
@@ -245,10 +245,10 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="go"># Muestra de la data</span>
 <span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
-<span class="go">         link              ...                                   geometry</span>
-<span class="go">726  10105020              ...                  POINT (3340708.5 6987667)</span>
-<span class="go">484  06700055              ...                 POINT (3809907.75 5784574)</span>
-<span class="go">867  14042170              ...               POINT (3758730.25 6411087.5)</span>
+<span class="go">          link              ...                                   geometry</span>
+<span class="go">2598  66056090              ...                    POINT (3695539 7433528)</span>
+<span class="go">140   06189080              ...               POINT (3888039.25 5702685.5)</span>
+<span class="go">1594  30070030              ...                  POINT (4097959 6533948.5)</span>
 
 <span class="go">[3 rows x 21 columns]</span>
 </pre></div>
@@ -293,18 +293,18 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">       toponimo_i                        ...                                                                   geometry</span>
-<span class="go">16616      307045                        ...                          POLYGON ((4234192.515790618 6109745.162429608,...</span>
-<span class="go">2166       286157                        ...                          POLYGON ((4234647.534268016 5824327.89986039, ...</span>
-<span class="go">1302       303072                        ...                          POLYGON ((4151198.653899147 6146577.484387311,...</span>
-<span class="go">6024       300990                        ...                          POLYGON ((4168759.085019697 6169663.454511774,...</span>
-<span class="go">6330       303430                        ...                          POLYGON ((4181539.964165569 6149975.103290583,...</span>
+<span class="go">15588      299011                        ...                          POLYGON ((3824614.000753656 5709242.808955176,...</span>
+<span class="go">5195       312290                        ...                          POLYGON ((4189060.493991271 6159390.647422607,...</span>
+<span class="go">11512      306131                        ...                          POLYGON ((4197382.308058548 6135262.128327812,...</span>
+<span class="go">15014      312745                        ...                          POLYGON ((4165914.142724511 6151348.05225054, ...</span>
+<span class="go">7986       309523                        ...                          POLYGON ((4156993.108363259 6145803.426652251,...</span>
 
 <span class="go">[5 rows x 9 columns]</span>
 </pre></div>
 </div>
 <p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2af36131a990&gt;</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b2110b4fc50&gt;</span>
 </pre></div>
 </div>
 <p>Que nos grafica el area de la fila 10 con un dibujito.</p>
@@ -314,61 +314,19 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <div class="highlight-ipython"><div class="highlight"><pre><span class="go">#import the standard plotting module</span>
 <span class="gp">In [12]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
-<span class="gp">In [13]: </span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NotImplementedError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-13-2b1da000a957&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s1">u&#39;matplotlib inline&#39;</span><span class="p">)</span>
+<span class="go"># create subplots</span>
+<span class="gp">In [13]: </span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">magic</span><span class="nt">(self, arg_s)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2161</span>         <span class="n">magic_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">magic_arg_s</span> <span class="o">=</span> <span class="n">arg_s</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2162</span>         <span class="n">magic_name</span> <span class="o">=</span> <span class="n">magic_name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">prefilter</span><span class="o">.</span><span class="n">ESC_MAGIC</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2163</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="n">magic_name</span><span class="p">,</span> <span class="n">magic_arg_s</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2164</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2165</span>     <span class="c1">#-------------------------------------------------------------------------</span>
+<span class="gp">In [14]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;codpcia&#39;</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="gh">Out[14]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x2b2110764f90&gt;</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">run_line_magic</span><span class="nt">(self, magic_name, line)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2082</span>                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span><span class="o">.</span><span class="n">f_locals</span>
-<span class="g g-Whitespace">   </span><span class="mi">2083</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2084</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2085</span>             <span class="k">return</span> <span class="n">result</span>
-<span class="g g-Whitespace">   </span><span class="mi">2086</span> 
+<span class="go"># Add title</span>
+<span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Localidades y provincias&#39;</span><span class="p">);</span>
 
-<span class="nn">&lt;decorator-gen-106&gt;</span> in <span class="ni">matplotlib</span><span class="nt">(self, line)</span>
+<span class="go"># Remove empty white space around the plot</span>
+<span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/magic.pyc</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">193</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">194</span> 
-<span class="g g-Whitespace">    </span><span class="mi">195</span>         <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/magics/pylab.pyc</span> in <span class="ni">matplotlib</span><span class="nt">(self, line)</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span>             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Available matplotlib backends: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">backends_list</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">100</span>             <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">enable_matplotlib</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_show_matplotlib_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span> 
-
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">enable_matplotlib</span><span class="nt">(self, gui)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2954</span>         <span class="c1"># Now we must activate the gui pylab wants to use, and fix %run to take</span>
-<span class="g g-Whitespace">   </span><span class="mi">2955</span>         <span class="c1"># plot updates into account</span>
-<span class="ne">-&gt; </span><span class="mi">2956</span>         <span class="bp">self</span><span class="o">.</span><span class="n">enable_gui</span><span class="p">(</span><span class="n">gui</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2957</span>         <span class="bp">self</span><span class="o">.</span><span class="n">magics_manager</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="s1">&#39;ExecutionMagics&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default_runner</span> <span class="o">=</span> \
-<span class="g g-Whitespace">   </span><span class="mi">2958</span>             <span class="n">pt</span><span class="o">.</span><span class="n">mpl_runner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safe_execfile</span><span class="p">)</span>
-
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">enable_gui</span><span class="nt">(self, gui)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2913</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2914</span>     <span class="k">def</span> <span class="nf">enable_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">2915</span>         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Implement enable_gui in a subclass&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2916</span>     
-<span class="g g-Whitespace">   </span><span class="mi">2917</span>     <span class="k">def</span> <span class="nf">enable_matplotlib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-
-<span class="ne">NotImplementedError</span>: Implement enable_gui in a subclass
-
-<span class="c1"># create subplots</span>
-<span class="c1"># Add title</span>
-<span class="c1"># Remove empty white space around the plot</span>
+<span class="gp">In [17]: </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <img alt="../../_images/localidades_provincia.png" src="../../_images/localidades_provincia.png" />
