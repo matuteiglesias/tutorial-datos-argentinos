@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-88382509-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Instalar Python + GIS &mdash; Coleccion de Tutoriales con Datos Argentinos  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Coleccion de Tutoriales con Datos Argentinos  documentation" href="../index.html"/>
+        <link rel="next" title="Intro: Jupyter notebooks, Pandas DataFrames, y GIS" href="../tutoriales/escuelas_del_conurbano/1_Geopandas.html"/>
+        <link rel="prev" title="Coleccion de tutoriales con datos argentinos" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Coleccion de Tutoriales con Datos Argentinos
+          
+
+          
+            
+            <img src="../_static/logo_localidades_arg.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2017
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Informacion General</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instalar Python + GIS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-python-gis-en-windows">Install Python + GIS en Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chequea-que-funciono">Chequea que funciono</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-python-gis-en-linux-mac">Install Python + GIS en Linux / Mac</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#si-no-funcionara-alguna-instalacion">Si no funcionara alguna instalacion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial 1: Escuelas del Conurbano</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutoriales/escuelas_del_conurbano/1_Geopandas.html">Intro: Jupyter notebooks, Pandas DataFrames, y GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutoriales/escuelas_del_conurbano/2_Geolocalizacion.html">Geolocalizacion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutoriales/escuelas_del_conurbano/3_Mapas.html">Mapas con geopandas y shapely</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutoriales/escuelas_del_conurbano/4_Operaciones_con_poligonos.html">Mas operaciones con poligonos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Coleccion de Tutoriales con Datos Argentinos</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Instalar Python + GIS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/matuteiglesias/tutorial-datos-argentinos/blob/master/source/info/Instalacion.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="instalar-python-gis">
+<h1>Instalar Python + GIS<a class="headerlink" href="#instalar-python-gis" title="Permalink to this headline">¶</a></h1>
+<p><strong>Las herramientas que vamos a usar</strong></p>
+<p>Los codigos que incluyo aca son en lenguage Python. Nunca es tarde para empezar a usar Python, sirve para hacer que la computadora haga cosas increibles! Se puede instalar directo de <a class="reference external" href="https://www.python.org/">su pagina</a>, pero <strong>recomiendo</strong> usar <a class="reference external" href="https://www.continuum.io/anaconda-overview">Anaconda</a> que es una distribucion open-source de los lenguajes Python y R para procesamiento de data, predictive analytics, y computacion cientifica, que intenta simplificar el manejo de los packages o modulos. Es decir, nos simplifica la vida.</p>
+<p>El codigo en Python esta pensado para ser escrito en un archivo y correrlo todo de una vez. Muchas veces es mas deseable correr solamente los ultimos renglones, sobretodo si estamos con un codigo que demora en correr y donde toda la primera parte no tiene ningun problema. Ademas en el caso que hayamos calculado algunas variables, quisieramos que sean recordadas por el momento y poder volver a usarlas facilmente. Por este tipo de cuestiones practicas, y otras mas, se desarrollaron las Jupyter notebooks, que nos permiten correr los codigos Python con esta modalidad mas practica. Para instalar <cite>ver aca. &lt;https://jupyter.readthedocs.io/en/latest/install.html#new-to-python-and-jupyter&gt;</cite></p>
+<div class="section" id="install-python-gis-en-windows">
+<h2>Install Python + GIS en Windows<a class="headerlink" href="#install-python-gis-en-windows" title="Permalink to this headline">¶</a></h2>
+<p>Estos pasos se testearon en Windows 7 and 10 con Anaconda3 64 bit, usando conda v4.3.29. (Octubre 2017)</p>
+<p><a class="reference external" href="https://www.continuum.io/downloads">Download Anaconda installer (64 bit)</a> para Windows.</p>
+<p>Instalar Anaconda a tu computadora clickeando el instalador, e instalarlo en el directorio que quieras (necesita administrador).
+Para <strong>todos los usuarios</strong> y con configuraciones por default.</p>
+<p>Fijate que <code class="docutils literal"><span class="pre">conda</span></code> funcione <a class="reference external" href="http://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/">abriendo una consola como administrador</a> y corriendo <code class="docutils literal"><span class="pre">conda</span> <span class="pre">--version</span></code>.</p>
+<p>A medida que sea necesario, instala estos packages con conda (y pip) corriendo en una consola estos comandos (el orden importa):</p>
+<div class="code highlight-default"><div class="highlight"><pre><span class="c1"># Install numpy (v 1.13.1)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
+
+<span class="c1"># Install pandas (v 0.20.3) --&gt; bundled with python-dateutil (v 2.6.1) and pytz (v 2017.2)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
+
+<span class="c1"># Install scipy (v 0.19.1)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scipy</span>
+
+<span class="c1"># Install matplotlib (v 2.0.2) --&gt; bundled with cycler, freetype, icu, jpeg, libpng, pyqt, qt, sip, sqlite, tornado, zlib</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+
+<span class="c1"># Install Geopandas (v 0.3.0) --&gt; bundled with click, click-plugins, cligj, curl, descartes, expat, fiona, freexl, gdal, geos, hdf4, hdf5, kealib, krb5, libiconv, libnetcdf, libpq, libspatialindex, libspatialite, libtiff, libxml2, munch, openjpeg, pcre, proj4, psycopg2, pyproj, pysal, rtree, shapely, sqlalchemy, xerces-c</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">geopandas</span>
+</pre></div>
+</div>
+<div class="section" id="chequea-que-funciono">
+<h3>Chequea que funciono<a class="headerlink" href="#chequea-que-funciono" title="Permalink to this headline">¶</a></h3>
+<p>Se puede testear que las instalaciones funcionaron corriendo en la consola IPython (es decir en un Jupyter notebook).</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">shapely</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>Si no recibis errores, deberia estar funcionando!</p>
+</div>
+</div>
+<div class="section" id="install-python-gis-en-linux-mac">
+<h2>Install Python + GIS en Linux / Mac<a class="headerlink" href="#install-python-gis-en-linux-mac" title="Permalink to this headline">¶</a></h2>
+<p>Esto funciona en Ubuntu 16.04 y posiblemente tambien en Mac.</p>
+<p><strong>Instalar Anaconda 3 y agregarlo al system path</strong></p>
+<div class="code highlight-default"><div class="highlight"><pre># Download and install Anaconda
+sudo wget https://repo.continuum.io/archive/Anaconda3-4.1.1-Linux-x86_64.sh
+sudo bash Anaconda3-4.1.1-Linux-x86_64.sh
+
+# Add Anaconda installation permanently to PATH variable
+nano ~/.bashrc
+
+# Add following line at the end of the file and save (EDIT ACCORDING YOUR INSTALLATION PATH)
+export PATH=$PATH:/PATH_TO_ANACONDA/anaconda3/bin:/PATH_TO_ANACONDA/anaconda3/lib/python3.5/site-packages
+</pre></div>
+</div>
+<p><strong>Instalar packages de Python</strong></p>
+<p>Instalar packages con conda (y pip) corriendo en una terminal los siguientes comandos (el orden importa):</p>
+<div class="code highlight-default"><div class="highlight"><pre><span class="c1"># Install numpy (v 1.13.1)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
+
+<span class="c1"># Install pandas (v 0.20.3) --&gt; bundled with python-dateutil (v 2.6.1) and pytz (v 2017.2)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
+
+<span class="c1"># Install scipy (v 0.19.1)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scipy</span>
+
+<span class="c1"># Install matplotlib (v 2.0.2) --&gt; bundled with cycler, freetype, icu, jpeg, libpng, pyqt, qt, sip, sqlite, tornado, zlib</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+
+<span class="c1"># Install Geopandas (v 0.3.0) --&gt; bundled with click, click-plugins, cligj, curl, descartes, expat, fiona, freexl, gdal, geos, hdf4, hdf5, kealib, krb5, libiconv, libnetcdf, libpq, libspatialindex, libspatialite, libtiff, libxml2, munch, openjpeg, pcre, proj4, psycopg2, pyproj, pysal, rtree, shapely, sqlalchemy, xerces-c</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">geopandas</span>
+</pre></div>
+</div>
+<div class="section" id="si-no-funcionara-alguna-instalacion">
+<h3>Si no funcionara alguna instalacion<a class="headerlink" href="#si-no-funcionara-alguna-instalacion" title="Permalink to this headline">¶</a></h3>
+<p>Si llegara a faltar algun otro package, lo mas recomendable <strong>buscar en Google</strong> como hacer cualquier cosa que necesites. No hace falta aclarar que en internet se puede encontrar practicamente toda la informacion necesaria para instalar cualquier modulo y resolver asuntos tecnicos.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tutoriales/escuelas_del_conurbano/1_Geopandas.html" class="btn btn-neutral float-right" title="Intro: Jupyter notebooks, Pandas DataFrames, y GIS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Coleccion de tutoriales con datos argentinos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+      Last updated on Jan 13, 2019.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
