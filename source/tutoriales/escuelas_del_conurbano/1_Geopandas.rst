@@ -131,7 +131,7 @@ Como ultimo ejemplo podemos graficar las localidades en el espacio. Las coloream
     # create subplots
     f, ax = plt.subplots(1, figsize=(3, 5))
 
-    pxlocdatos.plot(axes = ax, column = 'codpcia', edgecolor = 'None', marker = '.')
+    pxlocdatos.plot(ax = ax, column = 'codpcia', edgecolor = 'None', marker = '.')
        
     # Add title
     plt.title('Localidades y provincias');

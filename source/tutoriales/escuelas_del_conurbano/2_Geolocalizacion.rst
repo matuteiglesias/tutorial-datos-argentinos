@@ -23,7 +23,6 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
 
     import pandas as pd
     import matplotlib.pyplot as plt
-    %matplotlib inline
 
     # Vamos a cargar un padron de escuelas de Argentina
 
