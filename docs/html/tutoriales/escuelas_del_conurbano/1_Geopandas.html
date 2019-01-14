@@ -209,12 +209,12 @@
 <span class="go">#Un dataframe tiene muchos metodos que nos sirven para interactuar con el. Por ejemplo, para ver una muestra de la data:</span>
 <span class="gp">In [3]: </span><span class="n">persona</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go"></span>
-<span class="go">           radio  edad_0  edad_1  ...    edad_109  edad_110  TOTAL</span>
-<span class="go">18779   64550101      11       7  ...           0         0    900</span>
-<span class="go">30963  221330409       0       1  ...           0         0     13</span>
-<span class="go">49568  860350202       6       5  ...           0         0    150</span>
-<span class="go">7227    64276213      25      23  ...           0         0   1486</span>
-<span class="go">38617  500491409      13       9  ...           0         0    882</span>
+<span class="go">           radio  edad_0  edad_1  edad_2  edad_3  edad_4  ...    edad_106  edad_107  edad_108  edad_109  edad_110  TOTAL</span>
+<span class="go">31787  260211012      15      17      12      11      15  ...           0         0         0         0         0   1070</span>
+<span class="go">51893  900910306      10       9       8       7      12  ...           0         0         0         0         0    598</span>
+<span class="go">28898  180351001       0       0       0       2       0  ...           0         0         0         0         0     45</span>
+<span class="go">31379  221402719      27      25      22      27      24  ...           0         0         0         0         0   1448</span>
+<span class="go">31498  221680109      31      28      23      21      29  ...           0         0         0         0         0   1231</span>
 
 <span class="go">[5 rows x 113 columns]</span>
 </pre></div>
@@ -245,10 +245,10 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="go"># Muestra de la data</span>
 <span class="gp">In [6]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
-<span class="go">          link                     ...                                                          geometry</span>
-<span class="go">3292  86042010                     ...                       POINT (3864366.647951715 6799979.182726759)</span>
-<span class="go">923   14070030                     ...                                         POINT (3573739.5 6556963)</span>
-<span class="go">2191  50119020                     ...                                           POINT (3204909 6266244)</span>
+<span class="go">          link codpcia coddpto codloc             ...              hogares viv_part_h viv_part                     geometry</span>
+<span class="go">2181  50105220      50     105    220             ...                392.0      388.0    459.0  POINT (3266060.5 6170354.5)</span>
+<span class="go">2299  54091010      54     091    010             ...                209.0      204.0    243.0      POINT (4568966 6928267)</span>
+<span class="go">2121  50077010      50     077    010             ...                137.0       59.0    117.0  POINT (3292572.5 5996957.5)</span>
 
 <span class="go">[3 rows x 21 columns]</span>
 </pre></div>
@@ -293,18 +293,18 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="gp">In [10]: </span><span class="n">Buenos_Aires_datos</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">       toponimo_i                        ...                                                                   geometry</span>
-<span class="go">1113       301350                        ...                          POLYGON ((4183818.441408244 6119180.631869584,...</span>
-<span class="go">8119       298038                        ...                          POLYGON ((4197409.483685713 6123609.796056923,...</span>
-<span class="go">3770       303327                        ...                          POLYGON ((4184710.461328589 6150361.296890395,...</span>
-<span class="go">4077       305817                        ...                          POLYGON ((4173504.555483877 6128180.924669881,...</span>
-<span class="go">16906      285634                        ...                          POLYGON ((4196210.746618672 6045300.431940452,...</span>
+<span class="go">11715      307923                        ...                          POLYGON ((4191217.657210717 6133913.619054776,...</span>
+<span class="go">3148       298373                        ...                          POLYGON ((4199031.950840759 6113397.238906854,...</span>
+<span class="go">10170      313043                        ...                          POLYGON ((4203779.723314306 6103259.876643865,...</span>
+<span class="go">16755      284486                        ...                          POLYGON ((3764571.141860663 5856273.234579525,...</span>
+<span class="go">14436      286546                        ...                          POLYGON ((3981292.393515044 6240920.298952865,...</span>
 
 <span class="go">[5 rows x 9 columns]</span>
 </pre></div>
 </div>
 <p>Fijense que hay una columna que se llama <code class="docutils literal"><span class="pre">geometry</span></code>. En general la informacion especial de los objetos va a ir a para a esta columna. en el caso de la tabla &#8216;pxlocdatos&#8217; los elementos son instancias de shapely.Point. Estan describiendo probablemente un centroide del radio censal. El dataset de la Provincia si tiene formas geometricas, ver por ejemplo lo que pasa cuando hacemos:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">Buenos_Aires_datos</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span>
-<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2b2c5b3a5c90&gt;</span>
+<span class="gh">Out[11]: </span><span class="go">&lt;shapely.geometry.polygon.Polygon at 0x2ac69dee99d0&gt;</span>
 </pre></div>
 </div>
 <p>Que nos grafica el area de la fila 10 con un dibujito.</p>
@@ -318,7 +318,7 @@ pxlocdatos.dbf  pxlocdatos.prj  pxlocdatos.qpj  pxlocdatos.shp  pxlocdatos.shx  
 <span class="gp">In [13]: </span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="gp">In [14]: </span><span class="n">pxlocdatos</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;codpcia&#39;</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
-<span class="gh">Out[14]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x2b2c5afbaf90&gt;</span>
+<span class="gh">Out[14]: </span><span class="go">&lt;matplotlib.axes._subplots.AxesSubplot at 0x2ac69e5c7910&gt;</span>
 
 <span class="go"># Add title</span>
 <span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Localidades y provincias&#39;</span><span class="p">);</span>

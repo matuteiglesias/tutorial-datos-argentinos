@@ -8,7 +8,7 @@ Este pasaje se llama **geolocalizacion** y en general, no se reduce solo a encon
 
 Hay varios servicios de geolocalizacion. Lo mas comodo para mi es usar la **API de Google Maps**, que viene a ser un canal de comunicacion con Google Maps de forma que obtenemos resultados de busqueda pero sin necesidad de hacer trabajo manual. 
 
-Para los que deseen, pueden ir directamente a la pagina en donde se dan las instrucciones <https://developers.google.com/maps/documentation/geocoding/start> de uso. Es muy facil, en la parte inferior de dicha pagina hay un boton con la opcion de generar una API key. Esta es una clave que se pide cada vez que hacemos una consulta. Una vez que entregan la API key, ya podemos empezar a consultar. Por ejemplo, en la barra de busqueda se puede escribir:
+Para los que deseen, pueden ir directamente a la pagina en donde se dan las instrucciones <https://developers.google.com/maps/documentation/geocoding/start> de uso. Es muy facil, en la parte inferior de dicha pagina hay un boton con la opcion de generar una API key. Esta es una clave que se pide cada vez que hacemos una consulta. Una vez que entregan la API key, ya podemos empezar a consultar. Por ejemplo, en la barra de busqueda se puede escribir:º
 
 https://maps.googleapis.com/maps/api/geocode/json?address=Instituto+Santa+Maria+de+los+Angeles,+Coghlan
 
@@ -23,18 +23,17 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
 
     import pandas as pd
     import matplotlib.pyplot as plt
-    %matplotlib inline
 
     # Vamos a cargar un padron de escuelas de Argentina
 
     # Estos son los nombres de columna
-    cols = ['Jurisdicción','CUE Anexo','Nombre','Sector','Estado','Ámbito','Domicilio','CP','Teléfono','Código Localidad','Localidad','Departamento','E-mail','Ed. Común','Ed. Especial','Ed. de Jóvenes y Adultos','Ed. Artística','Ed. Hospitalaria Domiciliaria','Ed. Intercultural Bilingüe','Ed. Contexto de Encierro','Jardín maternal','Jardín de infantes','Primaria','Secundaria','Secundaria Técnica (INET)','Superior no Universitario','Superior No Universitario (INET)']
+    cols = ['Jurisdiccion','CUE Anexo','Nombre','Sector','Estado','Ambito','Domicilio','CP','Telefono','Codigo Localidad','Localidad','Departamento','E-mail','Ed. Comun','Ed. Especial','Ed. de Jovenes y Adultos','Ed. Artistica','Ed. Hospitalaria Domiciliaria','Ed. Intercultural Bilingue','Ed. Contexto de Encierro','Jardin maternal','Jardin de infantes','Primaria','Secundaria','Secundaria Tecnica (INET)','Superior no Universitario','Superior No Universitario (INET)']
 
     # Leer csv, remplazar las 'X' con True y los '' (NaN) con False
     escuelas = pd.read_csv('../../datos/escuelas_arg.csv', names=cols).fillna(False).replace('X', True)
 
     # Construir la columna 'dpto_link' con los codigos indetificatorios de partidos como los que teniamos
-    escuelas['dpto_link'] = escuelas['C\xc3\xb3digo Localidad'].astype(str).str.zfill(8).str[:5]
+    escuelas['dpto_link'] = escuelas['Codigo Localidad'].astype(str).str.zfill(8).str[:5]
 
     # Tenemos los radios censales del AMBA, que creamos en el notebook anterior. Creemos los 'dpto_link' del AMBA.
     radios_censales_AMBA = pd.read_csv('../../datos/AMBA_datos', dtype=object)
@@ -42,7 +41,7 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
 
     # Filtramos las escuelas AMBA
     escuelas_AMBA = escuelas.loc[escuelas['dpto_link'].isin(dpto_links_AMBA)]
-    escuelas_AMBA = pd.concat([escuelas_AMBA, escuelas.loc[escuelas['Jurisdicci\xc3\xb3n'] == 'Ciudad de Buenos Aires']])
+    escuelas_AMBA = pd.concat([escuelas_AMBA, escuelas.loc[escuelas['Jurisdiccion'] == 'Ciudad de Buenos Aires']])
 
     # Filtramos secundaria estatal
     escuelas_AMBA_secundaria_estatal = escuelas_AMBA.loc[escuelas_AMBA['Secundaria'] & (escuelas_AMBA[u'Sector'] == 'Estatal')]
@@ -53,7 +52,7 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
     escuelas_AMBA_secundaria_estatal['Domicilio'].astype(str) + ', ' + \
     escuelas_AMBA_secundaria_estatal['Localidad'].astype(str) + ', ' + \
     escuelas_AMBA_secundaria_estatal['Departamento'].astype(str) + ', ' + \
-    escuelas_AMBA_secundaria_estatal['Jurisdicci\xc3\xb3n'].astype(str) +', Argentina'
+    escuelas_AMBA_secundaria_estatal['Jurisdiccion'].astype(str) +', Argentina'
 
 
 Barbaro, con esto ya podemos empezar a preguntar a Google Maps. Sin embargo, antes de pasar a la geolocalizacion, incluyo unas funciones para aplicar en la columna 'Adress' y que nos permiten retocar un poco la expresion. Las disenie mirando las busquedas sin exito y viendo si habia algun patron con el cual reformatearlas. Por ejemplo, una de las expresiones mas comunes en Buenos Aires, pero que Google Maps no interpreta es 'E/' para indicar que el lugar esta 'entre' tal calle y tal otra. Removiendo la informacion de 'entre que calles esta' permite que la API no se confunda, y de hecho casi siempre se indica el nombre de calle y la altura, con lo cual la informacion de 'entre cuales calles' es redundante.

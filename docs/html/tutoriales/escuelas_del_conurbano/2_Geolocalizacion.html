@@ -185,7 +185,7 @@
 Dicho de otro modo, una cosa es saber el nombre de un lugar y su direccion, y tenerlo anotado. Otra cosa (por lo general, mejor) es conocer sus coordenadas geograficas, ya que pasamos de una frase que debe ser interpretada (la direccion) a un numero que describe una posicion univocamente y puede ser usado para cualquier calculo de ser necesario.</p>
 <p>Este pasaje se llama <strong>geolocalizacion</strong> y en general, no se reduce solo a encontrar las coordenadas geograficas para una &#8216;frase&#8217; que uno pregunte, sino que relaciona esta frase con un objeto en la base de datos de consulta y todos sus atributos. Es decir, nos puede ademas brindar otra informacion acerca del objeto por el cual preguntamos, por ejemplo que tipo de edificio se ubica en el lugar y que funciones cumple, cual es el distrito, provincia o pais correspondiente, su codigo postal, entre otras informaciones.</p>
 <p>Hay varios servicios de geolocalizacion. Lo mas comodo para mi es usar la <strong>API de Google Maps</strong>, que viene a ser un canal de comunicacion con Google Maps de forma que obtenemos resultados de busqueda pero sin necesidad de hacer trabajo manual.</p>
-<p>Para los que deseen, pueden ir directamente a la pagina en donde se dan las instrucciones &lt;<a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/start">https://developers.google.com/maps/documentation/geocoding/start</a>&gt; de uso. Es muy facil, en la parte inferior de dicha pagina hay un boton con la opcion de generar una API key. Esta es una clave que se pide cada vez que hacemos una consulta. Una vez que entregan la API key, ya podemos empezar a consultar. Por ejemplo, en la barra de busqueda se puede escribir:</p>
+<p>Para los que deseen, pueden ir directamente a la pagina en donde se dan las instrucciones &lt;<a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/start">https://developers.google.com/maps/documentation/geocoding/start</a>&gt; de uso. Es muy facil, en la parte inferior de dicha pagina hay un boton con la opcion de generar una API key. Esta es una clave que se pide cada vez que hacemos una consulta. Una vez que entregan la API key, ya podemos empezar a consultar. Por ejemplo, en la barra de busqueda se puede escribir:º</p>
 <p><a class="reference external" href="https://maps.googleapis.com/maps/api/geocode/json?address=Instituto+Santa+Maria+de+los+Angeles,+Coghlan">https://maps.googleapis.com/maps/api/geocode/json?address=Instituto+Santa+Maria+de+los+Angeles,+Coghlan</a></p>
 <p>y vas ver que viene dada una respuesta con informacion en formato json. La API key nos va a permitir consultar mucho mas rapido.</p>
 <p>Claro que en este paso nos podemos encontrar algunos inconvenientes. Es posible que la direccion que busquemos no se encuentre. En esta situacion hay varias opciones que considerar. Basicamente hay que averiguar porque exactamente no se encontro la direccion, y tambien evaluar que tan importante es en el marco de lo que estamos haciendo, si podemos dejar perder un dato o lo queremos recuperar.</p>
@@ -194,66 +194,38 @@ Dicho de otro modo, una cosa es saber el nombre de un lugar y su direccion, y te
 
 <span class="gp">In [2]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
-<span class="gp">In [3]: </span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NotImplementedError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-3-2b1da000a957&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s1">u&#39;matplotlib inline&#39;</span><span class="p">)</span>
+<span class="go"># Vamos a cargar un padron de escuelas de Argentina</span>
+<span class="go"># Estos son los nombres de columna</span>
+<span class="gp">In [3]: </span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jurisdiccion&#39;</span><span class="p">,</span><span class="s1">&#39;CUE Anexo&#39;</span><span class="p">,</span><span class="s1">&#39;Nombre&#39;</span><span class="p">,</span><span class="s1">&#39;Sector&#39;</span><span class="p">,</span><span class="s1">&#39;Estado&#39;</span><span class="p">,</span><span class="s1">&#39;Ambito&#39;</span><span class="p">,</span><span class="s1">&#39;Domicilio&#39;</span><span class="p">,</span><span class="s1">&#39;CP&#39;</span><span class="p">,</span><span class="s1">&#39;Telefono&#39;</span><span class="p">,</span><span class="s1">&#39;Codigo Localidad&#39;</span><span class="p">,</span><span class="s1">&#39;Localidad&#39;</span><span class="p">,</span><span class="s1">&#39;Departamento&#39;</span><span class="p">,</span><span class="s1">&#39;E-mail&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Comun&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Especial&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. de Jovenes y Adultos&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Artistica&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Hospitalaria Domiciliaria&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Intercultural Bilingue&#39;</span><span class="p">,</span><span class="s1">&#39;Ed. Contexto de Encierro&#39;</span><span class="p">,</span><span class="s1">&#39;Jardin maternal&#39;</span><span class="p">,</span><span class="s1">&#39;Jardin de infantes&#39;</span><span class="p">,</span><span class="s1">&#39;Primaria&#39;</span><span class="p">,</span><span class="s1">&#39;Secundaria&#39;</span><span class="p">,</span><span class="s1">&#39;Secundaria Tecnica (INET)&#39;</span><span class="p">,</span><span class="s1">&#39;Superior no Universitario&#39;</span><span class="p">,</span><span class="s1">&#39;Superior No Universitario (INET)&#39;</span><span class="p">]</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">magic</span><span class="nt">(self, arg_s)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2161</span>         <span class="n">magic_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">magic_arg_s</span> <span class="o">=</span> <span class="n">arg_s</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2162</span>         <span class="n">magic_name</span> <span class="o">=</span> <span class="n">magic_name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">prefilter</span><span class="o">.</span><span class="n">ESC_MAGIC</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2163</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="n">magic_name</span><span class="p">,</span> <span class="n">magic_arg_s</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2164</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2165</span>     <span class="c1">#-------------------------------------------------------------------------</span>
+<span class="go"># Leer csv, remplazar las &#39;X&#39; con True y los &#39;&#39; (NaN) con False</span>
+<span class="gp">In [4]: </span><span class="n">escuelas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../datos/escuelas_arg.csv&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">run_line_magic</span><span class="nt">(self, magic_name, line)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2082</span>                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span><span class="o">.</span><span class="n">f_locals</span>
-<span class="g g-Whitespace">   </span><span class="mi">2083</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2084</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2085</span>             <span class="k">return</span> <span class="n">result</span>
-<span class="g g-Whitespace">   </span><span class="mi">2086</span> 
+<span class="go"># Construir la columna &#39;dpto_link&#39; con los codigos indetificatorios de partidos como los que teniamos</span>
+<span class="gp">In [5]: </span><span class="n">escuelas</span><span class="p">[</span><span class="s1">&#39;dpto_link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">escuelas</span><span class="p">[</span><span class="s1">&#39;Codigo Localidad&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 
-<span class="nn">&lt;decorator-gen-106&gt;</span> in <span class="ni">matplotlib</span><span class="nt">(self, line)</span>
+<span class="go"># Tenemos los radios censales del AMBA, que creamos en el notebook anterior. Creemos los &#39;dpto_link&#39; del AMBA.</span>
+<span class="gp">In [6]: </span><span class="n">radios_censales_AMBA</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../datos/AMBA_datos&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/magic.pyc</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">193</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">194</span> 
-<span class="g g-Whitespace">    </span><span class="mi">195</span>         <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="gp">In [7]: </span><span class="n">dpto_links_AMBA</span> <span class="o">=</span> <span class="p">(</span><span class="n">radios_censales_AMBA</span><span class="p">[</span><span class="s1">&#39;prov&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">radios_censales_AMBA</span><span class="p">[</span><span class="s1">&#39;depto&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/magics/pylab.pyc</span> in <span class="ni">matplotlib</span><span class="nt">(self, line)</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span>             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Available matplotlib backends: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">backends_list</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">100</span>             <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">enable_matplotlib</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_show_matplotlib_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span> 
+<span class="go"># Filtramos las escuelas AMBA</span>
+<span class="gp">In [8]: </span><span class="n">escuelas_AMBA</span> <span class="o">=</span> <span class="n">escuelas</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">escuelas</span><span class="p">[</span><span class="s1">&#39;dpto_link&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">dpto_links_AMBA</span><span class="p">)]</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">enable_matplotlib</span><span class="nt">(self, gui)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2954</span>         <span class="c1"># Now we must activate the gui pylab wants to use, and fix %run to take</span>
-<span class="g g-Whitespace">   </span><span class="mi">2955</span>         <span class="c1"># plot updates into account</span>
-<span class="ne">-&gt; </span><span class="mi">2956</span>         <span class="bp">self</span><span class="o">.</span><span class="n">enable_gui</span><span class="p">(</span><span class="n">gui</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2957</span>         <span class="bp">self</span><span class="o">.</span><span class="n">magics_manager</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="s1">&#39;ExecutionMagics&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default_runner</span> <span class="o">=</span> \
-<span class="g g-Whitespace">   </span><span class="mi">2958</span>             <span class="n">pt</span><span class="o">.</span><span class="n">mpl_runner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">safe_execfile</span><span class="p">)</span>
+<span class="gp">In [9]: </span><span class="n">escuelas_AMBA</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">escuelas_AMBA</span><span class="p">,</span> <span class="n">escuelas</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">escuelas</span><span class="p">[</span><span class="s1">&#39;Jurisdiccion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ciudad de Buenos Aires&#39;</span><span class="p">]])</span>
 
-<span class="nn">/home/miglesia/anaconda2/lib/python2.7/site-packages/IPython/core/interactiveshell.pyc</span> in <span class="ni">enable_gui</span><span class="nt">(self, gui)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2913</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2914</span>     <span class="k">def</span> <span class="nf">enable_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">2915</span>         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Implement enable_gui in a subclass&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2916</span>     
-<span class="g g-Whitespace">   </span><span class="mi">2917</span>     <span class="k">def</span> <span class="nf">enable_matplotlib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="go"># Filtramos secundaria estatal</span>
+<span class="gp">In [10]: </span><span class="n">escuelas_AMBA_secundaria_estatal</span> <span class="o">=</span> <span class="n">escuelas_AMBA</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">escuelas_AMBA</span><span class="p">[</span><span class="s1">&#39;Secundaria&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">escuelas_AMBA</span><span class="p">[</span><span class="s1">u&#39;Sector&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Estatal&#39;</span><span class="p">)]</span>
 
-<span class="ne">NotImplementedError</span>: Implement enable_gui in a subclass
+<span class="gp">In [11]: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="c1"># Vamos a cargar un padron de escuelas de Argentina</span>
-<span class="c1"># Estos son los nombres de columna</span>
-<span class="c1"># Leer csv, remplazar las &#39;X&#39; con True y los &#39;&#39; (NaN) con False</span>
-<span class="c1"># Construir la columna &#39;dpto_link&#39; con los codigos indetificatorios de partidos como los que teniamos</span>
-<span class="c1"># Tenemos los radios censales del AMBA, que creamos en el notebook anterior. Creemos los &#39;dpto_link&#39; del AMBA.</span>
-<span class="c1"># Filtramos las escuelas AMBA</span>
-<span class="c1"># Filtramos secundaria estatal</span>
-<span class="c1"># Creamos un campo que llamamos &#39;Address&#39;, uniendo domicilio, localidad, departamento, jurisdiccion, y &#39;, Argentina&#39;</span>
+<span class="go"># Creamos un campo que llamamos &#39;Address&#39;, uniendo domicilio, localidad, departamento, jurisdiccion, y &#39;, Argentina&#39;</span>
+<span class="gp">In [12]: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span> <span class="o">=</span> \
+<span class="gp">   ....: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="p">[</span><span class="s1">&#39;Domicilio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+<span class="gp">   ....: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="p">[</span><span class="s1">&#39;Localidad&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+<span class="gp">   ....: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="p">[</span><span class="s1">&#39;Departamento&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+<span class="gp">   ....: </span><span class="n">escuelas_AMBA_secundaria_estatal</span><span class="p">[</span><span class="s1">&#39;Jurisdiccion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39;, Argentina&#39;</span>
+<span class="gp">   ....: </span>
 </pre></div>
 </div>
 <p>Barbaro, con esto ya podemos empezar a preguntar a Google Maps. Sin embargo, antes de pasar a la geolocalizacion, incluyo unas funciones para aplicar en la columna &#8216;Adress&#8217; y que nos permiten retocar un poco la expresion. Las disenie mirando las busquedas sin exito y viendo si habia algun patron con el cual reformatearlas. Por ejemplo, una de las expresiones mas comunes en Buenos Aires, pero que Google Maps no interpreta es &#8216;E/&#8217; para indicar que el lugar esta &#8216;entre&#8217; tal calle y tal otra. Removiendo la informacion de &#8216;entre que calles esta&#8217; permite que la API no se confunda, y de hecho casi siempre se indica el nombre de calle y la altura, con lo cual la informacion de &#8216;entre cuales calles&#8217; es redundante.</p>
@@ -265,26 +237,26 @@ Dicho de otro modo, una cosa es saber el nombre de un lugar y su direccion, y te
 <p>y</p>
 <p>&#8216;H. YRIGOYEN 50  , ESCOBAR, Buenos Aires, Argentina&#8217;</p>
 <p>aumentando en cada paso las chances te geolocalizar exitosamente. A continuacion los codigos de este paso:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">re</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="kn">import</span> <span class="nn">re</span>
 
-<span class="gp">In [5]: </span><span class="k">def</span> <span class="nf">filtrar_entre_calles</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-<span class="gp">   ...: </span>    <span class="s2">&quot;&quot;&quot;</span>
-<span class="gp">   ...: </span><span class="s2">    Removes substring between &#39;E/&#39; and next field (delimited by &#39;,&#39;). Case insensitive.</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [14]: </span><span class="k">def</span> <span class="nf">filtrar_entre_calles</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="s2">&quot;&quot;&quot;</span>
+<span class="gp">   ....: </span><span class="s2">    Removes substring between &#39;E/&#39; and next field (delimited by &#39;,&#39;). Case insensitive.</span>
+<span class="gp">   ....: </span>
 
 <span class="go">        # end = s.index( last, start )</span>
 </pre></div>
 </div>
 <p>Finalmente vamos a la funcion de geolocalizacion. Esta version necesita adaptarse para tratar con la quota diaria de consultas. Pero mientras tu dataset necesite menos de 2500 busquedas, no te tendrias que preocupar.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="kn">import</span> <span class="nn">json</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">json</span>
 
-<span class="gp">In [5]: </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">time</span>
 
-<span class="gp">In [5]: </span><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">urllib</span>
 
-<span class="gp">In [5]: </span><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">urllib2</span>
 
-<span class="gp">In [5]: </span><span class="k">def</span> <span class="nf">geolocate</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">API_key</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">BACKOFF_TIME</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+<span class="gp">In [14]: </span><span class="k">def</span> <span class="nf">geolocate</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">API_key</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">BACKOFF_TIME</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
 
 <span class="go">    # See https://developers.google.com/maps/documentation/timezone/get-api-key</span>
 <span class="go">#     with open(&#39;googleMapsAPIkey.txt&#39;, &#39;r&#39;) as myfile:</span>
@@ -299,29 +271,29 @@ Dicho de otro modo, una cosa es saber el nombre de un lugar y su direccion, y te
 </pre></div>
 </div>
 <p>Ahora...</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">dataframe</span> <span class="o">=</span> <span class="n">escuelas_AMBA_secundaria_estatal</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="n">dataframe</span> <span class="o">=</span> <span class="n">escuelas_AMBA_secundaria_estatal</span>
 
-<span class="gp">In [5]: </span><span class="n">col</span><span class="p">,</span> <span class="n">col_2</span><span class="p">,</span> <span class="n">col_3</span> <span class="o">=</span> <span class="s1">&#39;Address&#39;</span><span class="p">,</span> <span class="s1">&#39;Address_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Address_3&#39;</span>
+<span class="gp">In [14]: </span><span class="n">col</span><span class="p">,</span> <span class="n">col_2</span><span class="p">,</span> <span class="n">col_3</span> <span class="o">=</span> <span class="s1">&#39;Address&#39;</span><span class="p">,</span> <span class="s1">&#39;Address_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Address_3&#39;</span>
 
-<span class="gp">In [5]: </span><span class="n">API_key</span> <span class="o">=</span> <span class="s1">&#39;AIzaSyDjBFMZlNTyds2Sfihu2D5LTKupKDBpf6c&#39;</span>
+<span class="gp">In [14]: </span><span class="n">API_key</span> <span class="o">=</span> <span class="s1">&#39;AIzaSyDjBFMZlNTyds2Sfihu2D5LTKupKDBpf6c&#39;</span>
 
-<span class="gp">In [5]: </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-<span class="gp">   ...: </span>    <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
-<span class="gp">   ...: </span>    <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
-<span class="gp">   ...: </span>        <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
-<span class="gp">   ...: </span>    <span class="k">else</span><span class="p">:</span>
-<span class="gp">   ...: </span>        <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col_2</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
-<span class="gp">   ...: </span>        <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
-<span class="gp">   ...: </span>            <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
-<span class="gp">   ...: </span>        <span class="k">else</span><span class="p">:</span>
-<span class="gp">   ...: </span>            <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col_3</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
-<span class="gp">   ...: </span>            <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
-<span class="gp">   ...: </span>                <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [14]: </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
+<span class="gp">   ....: </span>        <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">   ....: </span>        <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col_2</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
+<span class="gp">   ....: </span>        <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
+<span class="gp">   ....: </span>            <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+<span class="gp">   ....: </span>        <span class="k">else</span><span class="p">:</span>
+<span class="gp">   ....: </span>            <span class="n">loc</span> <span class="o">=</span> <span class="n">geolocate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">col_3</span><span class="p">],</span> <span class="n">API_key</span><span class="p">)</span>
+<span class="gp">   ....: </span>            <span class="k">if</span> <span class="n">loc</span><span class="p">:</span>
+<span class="gp">   ....: </span>                <span class="n">set_geolocation_values</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 
-<span class="gp">In [5]: </span><span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">50</span> == 0:
-<span class="gp">   ...: </span>        <span class="k">print</span> <span class="s1">&#39;processed row &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [14]: </span><span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">50</span> == 0:
+<span class="gp">   ....: </span>        <span class="k">print</span> <span class="s1">&#39;processed row &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 </pre></div>
 </div>
 </div>

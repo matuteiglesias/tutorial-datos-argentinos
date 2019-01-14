@@ -27,7 +27,7 @@ Si la busqueda falla por algun motivo, la respuesta del servidor va a traer un e
     # Vamos a cargar un padron de escuelas de Argentina
 
     # Estos son los nombres de columna
-    cols = ['Jurisdiccion','CUE Anexo','Nombre','Sector','Estado','Ambito','Domicilio','CP','Telefono','Codigo Localidad','Localidad','Departamento','E-mail','Ed. Comun','Ed. Especial','Ed. de Jovenes y Adultos','Ed. Artistica','Ed. Hospitalaria Domiciliaria','Ed. Intercultural Bilingue','Ed. Contexto de Encierro','Jardin maternal','Jardin de infantes','Primaria','Secundaria','Secundaria Tecnica (INET)','Superior no Universitario','Superior No Universitario (INET)']
+    cols = ['Jurisdiccion','CUE Anexo','Nombre','Sector','Estado','Ambito','Domicilio','CP','Telefono','Codigo Localidad','Localidad','Departamento','E-mail','Ed. Comun','Ed. Especial','Ed. de Jovenes y Adultos','Ed. Artistica','Ed. Hospitalaria Domiciliaria','Ed. Intercultural Bilingüe','Ed. Contexto de Encierro','Jardin maternal','Jardin de infantes','Primaria','Secundaria','Secundaria Tecnica (INET)','Superior no Universitario','Superior No Universitario (INET)']
 
     # Leer csv, remplazar las 'X' con True y los '' (NaN) con False
     escuelas = pd.read_csv('../../datos/escuelas_arg.csv', names=cols).fillna(False).replace('X', True)
