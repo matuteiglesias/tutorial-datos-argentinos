@@ -49,6 +49,12 @@ Contenidos
 
 .. toctree::
    :maxdepth: 2
+   :caption: Tutorial 2: Mapeo del Censo 2010
+   
+   tutoriales/mapas_censoARG/1_Mapeo_Censo
+
+.. toctree::
+   :maxdepth: 2
    :caption: Links que valen la pena
 
 Links de valor
